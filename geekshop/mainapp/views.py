@@ -2,64 +2,67 @@ from django.shortcuts import render
 import datetime
 import os
 import json
+from .models import ProductCategory, Product, Contacts
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
-try:
-
-    with open(f'{BASE_DIR}\db_test.json', 'r', encoding="utf-8") as fd:
-
-        data = json.load(fd)
-        print(data)
-        db_content = data['db_content']
-        links_menu = data['links_menu']
-
-except Exception:
-    db_content = ''
-    links_menu = [{'href':'products_all', 'name':'все'},]
+# try:
+#
+#     with open(f'{BASE_DIR}\db_test.json', 'r', encoding="utf-8") as fd:
+#
+#         data = json.load(fd)
+#         print(data)
+#         db_content = data['db_content']
+#         links_menu = data['links_menu']
+#
+# except Exception:
+#     db_content = ''
+#     links_menu = [{'href':'products_all', 'name':'все'},]
 
 
 # Create your views here.
-# db_content = [
-#     {"prod_name":"TV System", "price": 200,},
-#     {"prod_name":"SoundSystem", "price": 300,},
-#     {"prod_name":"GSM Antenna", "price": 400,},
-# ]
+
 
 value = datetime.datetime.now() # значение даты для вывода в копирайт
 
-# links_menu = [
-#     {'href':'products_all', 'name':'все'},
-#     {'href':'products_home', 'name':'дом'},
-#     {'href':'products_office', 'name':'офис'},
-#     {'href':'products_modern', 'name':'модерн'},
-#     {'href':'products_classic', 'name':'классика'},
-# ]
 
 def main(request):
+
+    products = Product.objects.all()[:4]
+
     content = {
-        "test": "123 Andry",
-        "db_content": db_content,
-        "user": request.user,
-        "value": value,
+        "products": products,
         "title": "Магазин",
     }
     return render(request, 'mainapp/index.html', content)
 
 
-def products(request):
+def products(request, pk=None):
+
+    links_menu = ProductCategory.objects.all()
+
+    #при переходе на страницу продуктов открываем продукты первой категории
+    if pk == None:
+        products = Product.objects.filter(category=links_menu[0])
+    else:
+        products = Product.objects.filter(category=pk)
+
     context = {
+        "products": products,
         "value": value,
         "title": "Каталог",
         "links_menu": links_menu,
     }
+
     return render(request, 'mainapp/products.html', context)
 
 
 def contact(request):
+    contacts = Contacts.objects.all()[:3]
     context = {
-        "value": value,
+        "contacts": contacts,
         "title": "Контакты",
     }
+
     return render(request, 'mainapp/contact.html', context)

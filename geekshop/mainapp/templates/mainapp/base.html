@@ -21,13 +21,7 @@
         {% endblock %}
 
 
-		{{ test }}<br>
-		{{ user }}<br>
-		{% for item in db_content %}
-		<p>{{ item.prod_name }} {{ item.price }}</p>
-		{% endfor %}
-
-        {% block content %}
+		{% block content %}
         {% endblock %}
 
 		<div class="clr"></div>

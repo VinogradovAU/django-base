@@ -4,8 +4,8 @@
            class="active"
            {% endif %}
         >домой</a></li>
-    <li><a href="{% url 'products' %}"
-           {% if request.resolver_match.url_name == "products" %}
+    <li><a href="{% url 'products:index' %}"
+           {% if request.resolver_match.namespace == "products" %}
            class="active"
             {% endif %}
         >продукты</a></li>

@@ -4,7 +4,7 @@
 {% block menu %}
 	<div class="slider">
 		<div class="header clearfix">
-			<a href="index.html" class="logo"></a>
+			<a href="{% url 'main' %}" class="logo"></a>
 		{% include 'mainapp/includes/inc_main_menu.html' %}
 		</div>
 		<div class="text-slider">
@@ -19,12 +19,6 @@
 	</div>
 {% endblock %}
 
-		{{ test }}<br>
-		{{ user }}<br>
-		{% for item in db_content %}
-		<p>{{ item.prod_name }} {{ item.price }}</p>
-		{% endfor %}
-
 {% block content %}
 	<div class="featured">
 		<div class="featured-menu">
@@ -34,24 +28,19 @@
 		<div class="clearfix">
 		</div>
 		<div class="tab-content">
+			{% for product in products %}
 			<div class="block">
-				<a href="#"><img src="{% static '/img/product-1.jpg' %}" alt="">
+				<a href="#"><img src="/media/{{ product.image }}" width="270" height="270" alt="">
 					<div class="text">
-						<img src="{% static '/img/icon-hover.png' %}" alt="img">
-						<h4>Отличный стул</h4>
-						<p>Расположитесь комфортно. </p>
+						<img src="{% static '/img/icon-hover.png' %}" alt="{{ product.short_desc }}">
+						<h3>{{ product.category.name }}</h3>
+						<h4>{{ product.name }}</h4>
+						<p>{{ product.short_desc }}</p>
 					</div>
 				</a>
 			</div>
-			<div class="block">
-				<a href="#"><img src="{% static '/img/product-2.jpg' %}" alt="">
-					<div class="text">
-						<img src="{% static '/img/icon-hover.png' %}" alt="">
-						<h4>Стул повышенного качества</h4>
-						<p>Не оторваться. </p>
-					</div>
-				</a>
-			</div>
+			{% endfor%}
+
 		</div>
 	</div>
 {% endblock %}

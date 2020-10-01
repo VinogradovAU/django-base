@@ -1,11 +1,11 @@
 from django.shortcuts import render
 import datetime
+import random
 import os
 import json
 from .models import ProductCategory, Product, Contacts
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
 
 # try:
 #
@@ -24,11 +24,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # Create your views here.
 
 
-value = datetime.datetime.now() # значение даты для вывода в копирайт
+value = datetime.datetime.now()  # значение даты для вывода в копирайт
 
 
 def main(request):
-
     products = Product.objects.all()[:4]
 
     content = {
@@ -38,13 +37,25 @@ def main(request):
     return render(request, 'mainapp/index.html', content)
 
 
-def products(request, pk=None):
-
+def products(request, pk=None, pk2=None):
     links_menu = ProductCategory.objects.all()
 
-    #при переходе на страницу продуктов открываем продукты первой категории
+    if pk != None and pk2 != None:
+        product = Product.objects.get(id=pk2)
+
+        context = {
+            "product": product,
+            "value": value,
+            "title": "Каталог",
+            "links_menu": links_menu,
+        }
+
+        return render(request, 'mainapp/prod.html', context)
+
+    # при переходе на страницу продуктов выводим случайные товары
     if pk == None:
-        products = Product.objects.filter(category=links_menu[0])
+        products = Product.objects.order_by('?')[:4]
+
     else:
         products = Product.objects.filter(category=pk)
 

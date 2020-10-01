@@ -170,5 +170,44 @@
     "price": "12500.00",
     "quantity": 5
   }
-}
+},
+  {
+    "model": "mainapp.product",
+    "pk": 8,
+    "fields": {
+      "category": 6,
+      "name": "Стол №2",
+      "image": "products_images/Стол2.jpg",
+      "short_desc": "Вот такой стол №2",
+      "description": "Описание стола №2 . Стол как стол - бери и пользуйся",
+      "price": "10500.00",
+      "quantity": 5
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 9,
+    "fields": {
+      "category": 7,
+      "name": "Гардероб 1",
+      "image": "products_images/Гардероб1.jpg",
+      "short_desc": "Это гардероб 1",
+      "description": "Описание гардероба 1 . Все про гардероб.",
+      "price": "23500.00",
+      "quantity": 2
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 10,
+    "fields": {
+      "category": 7,
+      "name": "Гардероб 2",
+      "image": "products_images/Гардероб2.webp",
+      "short_desc": "гардероб 2 - гардероб 2",
+      "description": "Описание гардероба 2 . Все про гардероб 2........",
+      "price": "9500.00",
+      "quantity": 4
+    }
+  }
 ]

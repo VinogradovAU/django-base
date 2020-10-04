@@ -15,10 +15,10 @@ Including another URLconf
 """
 import mainapp.views as mainapp
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import include
+
 
 urlpatterns = [
     path('', mainapp.main, name="main"),
@@ -26,6 +26,7 @@ urlpatterns = [
     path('contact/', mainapp.contact, name="contact"),
     path('admin/', admin.site.urls),
     path('auth/', include('authapp.urls', namespace="auth")),
+    path('basket/', include('basketapp.urls', namespace="basket")),
 ]
 
 if settings.DEBUG:

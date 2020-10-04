@@ -22,21 +22,21 @@
     <div class="details-products">
         <div class="details-slider">
             <div class="slider-product">
-                <img src="/media/{{ product.image }}" width="370" height="370" alt="">
+                <img src="/media/{{ product_item.image }}" width="370" height="370" alt="NO PHOTO">
             </div>
             <div class="slider-control">
                 <div class="block">
-                    <a href="#"><img src="/media/{{ product.image }}" width="70" height="70" alt="">
+                    <a href="#"><img src="/media/{{ product_item.image }}" width="70" height="70" alt="NO PHOTO">
                         <div class="text"></div>
                     </a>
                 </div>
                 <div class="block">
-                    <a href="#"><img src="/media/{{ product.image }}" width="70" height="70" alt="">
+                    <a href="#"><img src="/media/{{ product_item.image }}" width="70" height="70" alt="NO PHOTO">
                         <div class="text"></div>
                     </a>
                 </div>
                 <div class="block">
-                    <a href="#"><img src="/media/{{ product.image }}" width="70" height="70" alt="">
+                    <a href="#"><img src="/media/{{ product_item.image }}" width="70" height="70" alt="NO PHOTO">
                         <div class="text"></div>
                     </a>
                 </div>
@@ -44,14 +44,23 @@
         </div>
 
         <div class="description">
-            <h3 class="big-bold">{{ product.name }}</h3>
+            <h3 class="big-bold">{{ product_item.name }}</h3>
             <h3 class="red">горячее предложение</h3>
-            <p class="price"> {{ product.price }} <span>руб</span></p>
-            <a href="#" class="red-button">
+            <p class="price"> {{ product_item.price }} <span>руб</span></p>
+
+            {% if user.is_authenticated %}
+              <a href="{% url 'basket:add' product_item.id %}" class="red-button">
                 заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </a>
+              </a>
+            {% else %}
+              <a href="{% url 'authapp:login' %}" class="red-button">
+                войти для заказа <i class="fa fa-chevron-right" aria-hidden="true"></i>
+              </a>
+            {% endif %}
+
+
             <div class="description-text">
-                <p>{{ product.description }}</p>
+                <p>{{ product_item.description }}</p>
 
             </div>
         </div>
@@ -60,36 +69,25 @@
     <div class="related">
         <div class="title clearfix">
             <h2>Похожие продукты</h2>
-            <a class="explore" href="#">показать все <img src="{% static '/img/arrow.png' %}" alt=""></a>
+            <a class="explore" href="{% url 'products:index' %} {{ pk }}">показать все <img src="{% static '/img/arrow.png' %}" alt="NO PHOTO"></a>
         </div>
         <div class="related-products clearfix">
+
+            {% for item in products_for_sub_menu %}
+
             <div class="block">
-                <a href="#"><img src="{% static '/img/product-11.jpg' %}" alt="">
+                <a href="{% url 'products:index' %}{{ item.category.id }}/{{ item.id }}"><img src="/media/{{ item.image }}" width="270" height="270" alt="NO PHOTO">
                     <div class="text">
-                        <img src="{% static '/img/icon-hover.png' %}" alt="img">
-                        <h4>Стул повышенного качества</h4>
-                        <p>Не оторваться. </p>
+                        <img src="{% static '/img/icon-hover.png' %}" alt="{{ item.short_desc }}">
+                        <h4>{{ item.name }}</h4>
+                        <p>{{ item.short_desc }}</p>
+                        <p><b>{{ item.price }} руб.</b></p>
                     </div>
                 </a>
             </div>
-            <div class="block">
-                <a href="#"><img src="{% static '/img/product-21.jpg' %}" alt="">
-                    <div class="text">
-                        <img src="{% static '/img/icon-hover.png' %}" alt="img">
-                        <h4>Стул повышенного качества</h4>
-                        <p>Не оторваться. </p>
-                    </div>
-                </a>
-            </div>
-            <div class="block">
-                <a href="#"><img src="{% static '/img/product-31.jpg' %}" alt="">
-                    <div class="text">
-                        <img src="{% static '/img/icon-hover.png' %}" alt="img">
-                        <h4>Стул повышенного качества</h4>
-                        <p>Не оторваться. </p>
-                    </div>
-                </a>
-            </div>
+
+            {% endfor %}
+
 
         </div>
     </div>

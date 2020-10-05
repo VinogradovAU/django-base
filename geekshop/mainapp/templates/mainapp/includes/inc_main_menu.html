@@ -20,8 +20,8 @@
 </ul>
 <a href="#" class="search"></a>
 <a href="{% url 'basket:view' %}" class="basket">
-    <span style="padding-left:20px;">                     <!- #******** останосилмя на этом методе.->
-        {% if basket %} {{ basket|length }} {% endif %}
-        <!-(#{ count_items })->
+    <span style="padding-left:20px; display:block">                     <!- #******** останосилмя на этом методе.->
+        {% if basket %} {{ basket|length }} {% endif %}  ({{ count_items }}руб.)
+
     </span>
 </a>

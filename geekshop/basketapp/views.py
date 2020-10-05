@@ -46,11 +46,13 @@ def basket_remove(request, pk):
 
 def basket_view(request):
     basket = Basket.objects.filter(user=request.user)
+    # calc_total_price = calc_total_price(basket)
 
     content = {
         "title": "корзина",
         "basket": basket,
         "total_all_price": calc_total_price(basket),
+        "count_items": calc_total_price(basket),
     }
 
     return render(request, "basketapp/basket.html", content)
@@ -68,7 +70,7 @@ def calc_total_price(obj):
 def count_items(obj):
     # obj - объект корзины конкретного пользователя
 
-    count_items = 0 #переменная для суммы товаров
+    count_items = 0  # переменная для суммы товаров
     for k in obj:
         count_items += k.quantity
 

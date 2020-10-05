@@ -55,11 +55,21 @@ def basket_view(request):
 
     return render(request, "basketapp/basket.html", content)
 
+
 def calc_total_price(obj):
-    #obj - объект корзины конкретного пользователя
+    # obj - объект корзины конкретного пользователя
     total_all_price = 0
     for k in obj:
         total_for_item = k.product.price * k.quantity
         total_all_price += total_for_item
     return total_all_price
 
+
+def count_items(obj):
+    # obj - объект корзины конкретного пользователя
+
+    count_items = 0 #переменная для суммы товаров
+    for k in obj:
+        count_items += k.quantity
+
+    return count_items

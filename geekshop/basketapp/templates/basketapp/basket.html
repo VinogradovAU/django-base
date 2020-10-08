@@ -1,5 +1,10 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
+<!--
+    <script src="{% static '/js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static '/js/basket_scripts.js' %}"></script>
+    -->
+
 {% block menu %}
 <div class="hero-white">
     <div class="header clearfix">
@@ -20,32 +25,34 @@
 
 
     <div class="details-products">
-            {% include 'basketapp/includes/inc_boot_basket.html' %}
-
-        </div>
+        {% include 'basketapp/includes/inc_boot_basket.html' %}
 
     </div>
 
-    <div class="related">
-        <div class="related-products clearfix">
+</div>
 
-            {% for item in products_for_sub_menu %}
+<div class="related">
+    <div class="related-products clearfix">
 
-            <div class="block">
-                <a href="{% url 'products:index' %}{{ item.category.id }}/{{ item.id }}"><img src="/media/{{ item.image }}" width="270" height="270" alt="NO PHOTO">
-                    <div class="text">
-                        <img src="{% static '/img/icon-hover.png' %}" alt="{{ item.short_desc }}">
-                        <h4>{{ item.name }}</h4>
-                        <p>{{ item.short_desc }}</p>
-                        <p><b>{{ item.price }} руб.</b></p>
-                    </div>
-                </a>
-            </div>
+        {% for item in products_for_sub_menu %}
 
-            {% endfor %}
-
-
+        <div class="block">
+            <a href="{% url 'products:index' %}{{ item.category.id }}/{{ item.id }}"><img src="/media/{{ item.image }}"
+                                                                                          width="270" height="270"
+                                                                                          alt="NO PHOTO">
+                <div class="text">
+                    <img src="{% static '/img/icon-hover.png' %}" alt="{{ item.short_desc }}">
+                    <h4>{{ item.name }}</h4>
+                    <p>{{ item.short_desc }}</p>
+                    <p><b>{{ item.price }} руб.</b></p>
+                </div>
+            </a>
         </div>
+
+        {% endfor %}
+
+
     </div>
+</div>
 </div>
 {% endblock %}

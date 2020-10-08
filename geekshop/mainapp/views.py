@@ -14,15 +14,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 value = datetime.datetime.now()  # значение даты для вывода в копирайт
 
+def get_basket(user):
+    if user.is_authenticated:
+        return Basket.objects.filter(user=user)
+    else:
+        return []
 
 def main(request):
-    # делаем счетчик товаров в карзине на странице
-    basket = [] #создаем пустую корзину
-    calc_total_price = 0
-
-    if request.user.is_authenticated: #если пользователь вошел, читаем его карзину
-        basket = Basket.objects.filter(user=request.user)
-        calc_total_price = views.calc_total_price(basket)
     #получаем продукты для вывода на главную
     products = Product.objects.all()[:4]
 
@@ -30,20 +28,13 @@ def main(request):
         "products": products,
         "title": "Магазин",
         "value": value,  # значение даты для вывода в копирайт
-        "basket": basket,
-        "count_items": calc_total_price,
-    }
+        "basket": get_basket(request.user),
+   }
     return render(request, 'mainapp/index.html', content)
 
 
 def products(request, pk=None, pk2=None):
-    # делаем счетчик товаров в карзине на странице
-    basket = [] #создаем пустую корзину
-    calc_total_price = 0
 
-    if request.user.is_authenticated: #если пользователь вошел, читаем его карзину
-        basket = Basket.objects.filter(user=request.user)
-        calc_total_price = views.calc_total_price(basket)
     #загружаем названия категорий для формирования меню
     links_menu = ProductCategory.objects.all()
 
@@ -60,8 +51,7 @@ def products(request, pk=None, pk2=None):
             "value": value, # значение даты для вывода в копирайт
             "title": "Каталог",
             "links_menu": links_menu,
-            "basket": basket,
-            "count_items": calc_total_price,
+            "basket": get_basket(request.user),
         }
 
         return render(request, 'mainapp/prod.html', context)
@@ -81,26 +71,18 @@ def products(request, pk=None, pk2=None):
         "value": value,
         "title": "Каталог",
         "links_menu": links_menu,
-        "basket": basket,
-        "count_items": calc_total_price,
+        "basket": get_basket(request.user),
     }
 
     return render(request, 'mainapp/products.html', context)
 
 
 def contact(request):
-    # делаем счетчик товаров в карзине на странице
-    basket = [] #создаем пустую корзину
-    calc_total_price = 0
-    if request.user.is_authenticated: #если пользователь вошел, читаем его карзину
-        basket = Basket.objects.filter(user=request.user)
-        calc_total_price = views.calc_total_price(basket)
     contacts = Contacts.objects.all()[:3]
     context = {
         "contacts": contacts,
         "title": "Контакты",
-        "basket": basket,
-        "count_items": calc_total_price,
+        "basket": get_basket(request.user),
     }
 
     return render(request, 'mainapp/contact.html', context)

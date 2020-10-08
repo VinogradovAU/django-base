@@ -7,8 +7,10 @@ from django.urls import reverse
 def login(request):
     title = "вход"
 
-    login_form = ShopUserLoginForms(data=request.POST)
-    print(login_form)
+    login_form = ShopUserLoginForms(data=request.POST or None)
+    next = request.GET.get('next', '')
+
+    print('--1--',next)
     if request.method == 'POST' and login_form.is_valid():
         username = request.POST['username']
         password = request.POST['password']
@@ -16,10 +18,16 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user and user.is_active:
             auth.login(request, user)  # добавляем объект пользователя в request
-            return HttpResponseRedirect(reverse('main'))  # возврат на главную страницу
+            if 'next' in request.POST.keys():
+                print('--2--', request.POST)
+                return HttpResponseRedirect(request.POST['next'])
+
+            print('--3--', next)
+            return HttpResponseRedirect(reverse('main'))
 
     # если не было запроса POST, то собираем контекст и выводим пользователю страницу входа
-    content = {'title': title, 'login_form': login_form}
+    content = {'title': title, 'login_form': login_form, 'next': next}
+    print('a тут')
     return render(request, 'authapp/login.html', content)
 
 

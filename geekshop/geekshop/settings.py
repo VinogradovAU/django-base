@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +21,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '63#7@5e0j@4mvp7heft21&y0ln12fmc4!5l!4(ti_9yyiu(r!d'
+
+try:
+    with open(f'{BASE_DIR}\geekshop\key_conf.json') as fd:
+        data_from_key_config = json.load(fd)
+        SECRET_KEY = data_from_key_config['SECRET_KEY']
+except Exception:
+    SECRET_KEY = ''
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mainapp',
+    'authapp',
+    'basketapp',
 ]
 
 MIDDLEWARE = [
@@ -70,6 +80,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'geekshop.wsgi.application'
 
+AUTH_USER_MODEL = 'authapp.ShopUser'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -123,3 +134,12 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, '../media')
+
+FIXTURE_DIRS = (
+    os.path.join(BASE_DIR, '/fixtures/'),
+)
+
+LOGIN_URL = '/auth/login/'

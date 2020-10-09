@@ -1,0 +1,95 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+{% block menu %}
+<div class="hero-white">
+    <div class="header clearfix">
+        <a href="{% url 'main' %}" class="logo"></a>
+
+        {% include 'mainapp/includes/inc_main_menu.html' %}
+
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="details">
+    <div class="links clearfix">
+        {% include 'mainapp/includes/inc_cat_menu.html' %}
+
+    </div>
+
+
+    <div class="details-products">
+        <div class="details-slider">
+            <div class="slider-product">
+                <img src="/media/{{ product_item.image }}" width="370" height="370" alt="NO PHOTO">
+            </div>
+            <div class="slider-control">
+                <div class="block">
+                    <a href="#"><img src="/media/{{ product_item.image }}" width="70" height="70" alt="NO PHOTO">
+                        <div class="text"></div>
+                    </a>
+                </div>
+                <div class="block">
+                    <a href="#"><img src="/media/{{ product_item.image }}" width="70" height="70" alt="NO PHOTO">
+                        <div class="text"></div>
+                    </a>
+                </div>
+                <div class="block">
+                    <a href="#"><img src="/media/{{ product_item.image }}" width="70" height="70" alt="NO PHOTO">
+                        <div class="text"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="description">
+            <h3 class="big-bold">{{ product_item.name }}</h3>
+            <h3 class="red">горячее предложение</h3>
+            <p class="price"> {{ product_item.price }} <span>руб</span></p>
+
+            {% if user.is_authenticated %}
+              <a href="{% url 'basket:add' product_item.id %}" class="red-button">
+                заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
+              </a>
+            {% else %}
+              <a href="{% url 'authapp:login' %}" class="red-button">
+                войти для заказа <i class="fa fa-chevron-right" aria-hidden="true"></i>
+              </a>
+            {% endif %}
+
+
+            <div class="description-text">
+                <p>{{ product_item.description }}</p>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="related">
+        <div class="title clearfix">
+            <h2>Похожие продукты</h2>
+            <a class="explore" href="{% url 'products:index' %} {{ pk }}">показать все <img src="{% static '/img/arrow.png' %}" alt="NO PHOTO"></a>
+        </div>
+        <div class="related-products clearfix">
+
+            {% for item in products_for_sub_menu %}
+
+            <div class="block">
+                <a href="{% url 'products:index' %}{{ item.category.id }}/{{ item.id }}"><img src="/media/{{ item.image }}" width="270" height="270" alt="NO PHOTO">
+                    <div class="text">
+                        <img src="{% static '/img/icon-hover.png' %}" alt="{{ item.short_desc }}">
+                        <h4>{{ item.name }}</h4>
+                        <p>{{ item.short_desc }}</p>
+                        <p><b>{{ item.price }} руб.</b></p>
+                    </div>
+                </a>
+            </div>
+
+            {% endfor %}
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}

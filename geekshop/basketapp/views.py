@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from basketapp.models import Basket
-from mainapp.models import Product
+from mainapp.models import Product, ProductCategory
 from mainapp import views
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -11,8 +11,12 @@ from django.http import JsonResponse
 @login_required
 def basket(request):
     title = "Корзина"
+    # загружаем названия категорий для формирования меню
+    links_menu = ProductCategory.objects.all()
+
     content = {
         "title": title,
+        "links_menu": links_menu,
     }
     return render(request, 'basketapp/basket.html', content)
 
@@ -39,9 +43,14 @@ def basket_remove(request, pk):
     basket = Basket.objects.filter(user=request.user, product__id=pk).delete()
 
     basket = Basket.objects.filter(user=request.user)
+
+    # загружаем названия категорий для формирования меню
+    links_menu = ProductCategory.objects.all()
+
     content = {
         "title": "корзина",
         "basket": basket,
+        "links_menu": links_menu,
     }
     return render(request, "basketapp/basket.html", content)
 
@@ -51,9 +60,13 @@ def basket_view(request):
     basket = Basket.objects.filter(user=request.user)
     # calc_total_price = calc_total_price(basket)
 
+    # загружаем названия категорий для формирования меню
+    links_menu = ProductCategory.objects.all()
+
     content = {
         "title": "корзина",
         "basket": basket,
+        "links_menu": links_menu,
     }
 
     return render(request, "basketapp/basket.html", content)
@@ -61,6 +74,7 @@ def basket_view(request):
 
 @login_required
 def basket_edit(request, pk, quantity):
+    print('я в basket_edit')
     if request.is_ajax():
         quantity = int(quantity)
         new_basket_item = Basket.objects.get(pk=int(pk))
@@ -75,10 +89,10 @@ def basket_edit(request, pk, quantity):
             order_by('product__category')
 
         content = {
-            'basket_items': basket_items,
+            'basket': basket_items,
         }
 
-        result = render_to_string('basketapp/includes/inc_basket_list.html', \
+        result = render_to_string('basketapp/includes/inc_boot_basket.html', \
                                   content)
 
         return JsonResponse({'result': result})

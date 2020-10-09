@@ -1,4 +1,7 @@
 window.onload = function () {
+    elem = document.getElementById('span_basket');
+    elem.innerText='';
+
     /*
     // можем получить DOM-объект меню через JS
     var menu = document.getElementsByClassName('menu')[0];
@@ -35,6 +38,9 @@ window.onload = function () {
 
                 success: function (data) {
                     $('.basket_list').html(data.result);
+
+//                    elem = document.getElementById('span_basket');
+//                    elem.innerText='';
                     console.log('ajax done');
                 },
             });

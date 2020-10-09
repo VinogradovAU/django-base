@@ -1,9 +1,12 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
-<!--
+
+ {% block js %}
     <script src="{% static '/js/jquery-3.2.1.min.js' %}"></script>
     <script src="{% static '/js/basket_scripts.js' %}"></script>
-    -->
+    <link href="{% static '/css/bootstrap.min.css' %}" rel="stylesheet" id="bootstrap-css">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+ {% endblock %}
 
 {% block menu %}
 <div class="hero-white">
@@ -25,8 +28,9 @@
 
 
     <div class="details-products">
+        <div class="basket_list">
         {% include 'basketapp/includes/inc_boot_basket.html' %}
-
+        </div>
     </div>
 
 </div>

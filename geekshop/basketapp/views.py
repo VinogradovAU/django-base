@@ -9,10 +9,15 @@ from django.http import JsonResponse
 
 
 @login_required
+def get_links_menu(request):
+    return ProductCategory.objects.all().exclude(is_active=False)
+
+
+@login_required
 def basket(request):
     title = "Корзина"
     # загружаем названия категорий для формирования меню
-    links_menu = ProductCategory.objects.all()
+    links_menu = get_links_menu()
 
     content = {
         "title": title,
@@ -45,7 +50,7 @@ def basket_remove(request, pk):
     basket = Basket.objects.filter(user=request.user)
 
     # загружаем названия категорий для формирования меню
-    links_menu = ProductCategory.objects.all()
+    links_menu = get_links_menu()
 
     content = {
         "title": "корзина",
@@ -56,12 +61,17 @@ def basket_remove(request, pk):
 
 @login_required
 def basket_view(request):
-
     basket = Basket.objects.filter(user=request.user)
-    # calc_total_price = calc_total_price(basket)
 
-    # загружаем названия категорий для формирования меню
-    links_menu = ProductCategory.objects.all()
+    # basket_1 = Basket.objects.filter(user=request.user)
+    # # calc_total_price = calc_total_price(basket)
+    # basket=[]
+    # for item in basket_1:
+    #     print(f"состояние категории {item.product.category.is_active}, для {item.product}")
+    #     if item.product.category.is_active==True:
+    #         basket.append(item)
+    # загружаем названия к атегорий для формирования меню
+    links_menu = get_links_menu(request)
 
     content = {
         "title": "корзина",

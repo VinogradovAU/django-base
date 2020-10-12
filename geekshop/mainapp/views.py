@@ -36,7 +36,7 @@ def main(request):
 def products(request, pk=None, pk2=None):
 
     #загружаем названия категорий для формирования меню
-    links_menu = ProductCategory.objects.all()
+    links_menu = ProductCategory.objects.all().exclude(is_active=False)
 
     if pk != None and pk2 != None:         # прилетели данные на конкретный продукт, его и выводим
         product_item = get_object_or_404(Product.objects, id=pk2)

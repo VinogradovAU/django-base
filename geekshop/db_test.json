@@ -1,0 +1,15 @@
+{
+    "db_content": [
+        {"prod_name":"TV System", "price": 200},
+        {"prod_name":"SoundSystem", "price": 300},
+        {"prod_name":"GSM Antenna", "price": 400}
+    ],
+
+    "links_menu": [
+        {"href":"products_all", "name":"все"},
+        {"href":"products_home", "name":"дом"},
+        {"href":"products_office", "name":"офис"},
+        {"href":"products_modern", "name":"модерн"},
+        {"href":"products_classic", "name":"классика"}
+    ]
+}

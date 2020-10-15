@@ -1,0 +1,20 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+
+{% block content %}
+  <div class="user_delete">
+    Уверены, что хотите восстановить категорию
+      {{ objects.name|title }}</b> ?
+    <form action="{% url 'admin:category_recovery' objects.pk %}"
+          method="post">
+      {% csrf_token %}
+      <input class="btn btn-danger" type="submit" value="восстановить">
+    </form>
+    <button class="btn btn-success">
+      <a href="{% url 'admin:categories' %}">
+        Отмена
+      </a>
+    </button>
+  </div>
+{% endblock %}

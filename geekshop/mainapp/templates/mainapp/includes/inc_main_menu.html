@@ -4,7 +4,14 @@
            class="active"
            {% endif %}
         >домой</a></li>
+    <!--
     <li><a href="{% url 'products:index' %}"
+           {% if request.resolver_match.namespace == "products" %}
+           class="active"
+            {% endif %}
+        >продукты</a></li>
+    -->
+    <li><a href="{% url 'products:page' '0' '1' %}"
            {% if request.resolver_match.namespace == "products" %}
            class="active"
             {% endif %}

@@ -1,4 +1,5 @@
 {% extends 'mainapp/base.html' %}
+
 {% load static %}
 {% block menu %}
 <div class="hero-white">
@@ -12,10 +13,32 @@
 {% endblock %}
 
 {% block content %}
-<div class="details">
+  <div class="details">
     <div class="links clearfix">
-        {% include 'mainapp/includes/inc_cat_menu.html' %}
+      {% include 'mainapp/includes/inc_cat_menu.html' %}
 
+    </div>
+
+    <div class="products_list">
+      <div class="title clearfix">
+        <h2>Категория: "{{ category.name|title }}"</h2>
+        <div class="paginator">
+          {% if products.has_previous %}
+            <a href="{% url 'products:page' category.pk products.previous_page_number %}">
+              <
+            </a>
+          {% endif %}
+          <span class="current">
+            страница {{ products.number }} из
+            {{ products.paginator.num_pages }}
+          </span>
+          {% if products.has_next %}
+            <a href="{% url 'products:page' category.pk products.next_page_number %}">
+              >
+            </a>
+          {% endif %}
+        </div>
+      </div>
     </div>
 
     <div class="tab-content">
@@ -33,7 +56,5 @@
         </div>
         {% endfor%}
 
-    </div>
-
-</div>
+  </div>
 {% endblock %}

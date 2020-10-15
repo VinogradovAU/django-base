@@ -7,6 +7,7 @@ from .models import ProductCategory, Product, Contacts
 from django.shortcuts import get_object_or_404
 from basketapp.models import Basket
 from basketapp import views
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -31,6 +32,44 @@ def main(request):
         "basket": get_basket(request.user),
    }
     return render(request, 'mainapp/index.html', content)
+
+def product_list(request, pk=None, page=1):
+    title = 'продукты'
+    links_menu = ProductCategory.objects.filter(is_active=True)
+    basket = get_basket(request.user)
+    print('pk:', pk)
+    print('page:', page)
+
+    if pk != None:
+        if pk == 0:
+            category = {
+                'pk': 0,
+                'name': 'все',
+            }
+            products = Product.objects.filter(is_active=True, category__is_active=True).order_by('price')
+
+        else:
+
+            category = get_object_or_404(ProductCategory, pk=pk)
+            products = Product.objects.filter(category__pk=pk, is_active=True, category__is_active=True).order_by('price')
+
+        paginator = Paginator(products, 3)
+        try:
+            products_paginator = paginator.page(page)
+        except PageNotAnInteger:
+            products_paginator = paginator.page(1)
+        except EmptyPage:
+            products_paginator = paginator.page(paginator.num_pages)
+
+        content = {
+            'title': title,
+            'links_menu': links_menu,
+            'category': category,
+            'products': products_paginator,
+            'basket': basket,
+        }
+
+        return render(request, 'mainapp/products_list.html', content)
 
 
 def products(request, pk=None, pk2=None):

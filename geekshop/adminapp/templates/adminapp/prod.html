@@ -1,20 +1,15 @@
 {% extends 'adminapp/base.html' %}
-{% load static %}
+{% load staticfiles %}
 
 {% block content %}
   <div class="products_list">
     <button class="new_product">
-        <a href={% url 'admin:product_create' category_pk %}>
+      <a href={% url 'admin:product_create' object.category.pk %}>
         новый продукт
       </a>
     </button>
 
-    {% for object in object_list %}
-
-      <div class="product_record
-      {% if not object.is_active %}
-          not_active
-          {% endif %}">
+      <div class="product_record">
         <img
           src="/media/{{object.image|default:'products_images/default.jpg'}}" width="100" height="100"
           alt="{{ object.name }}">
@@ -22,29 +17,20 @@
           {{ object.name|title }}
         </div>
         <div class="product_actions">
-          <button>
-            <a href={% url 'admin:prod' object.category.pk object.pk %}>
-              подробнее
-            </a>
-
-          </button>
-
-          <button>
+            <button>
             <a href={% url 'admin:product_update' object.pk %}>
               редактировать
             </a>
           </button>
           <button>
-          {% if object.is_active %}
             <a href={% url 'admin:product_delete' object.pk %}>
               удалить
             </a>
-          {% endif %}
-            {% if not object.is_active %}
-            <a href={% url 'admin:product_recovery' object.pk %}>
-              Восстановить
+          </button>
+          <button class="btn btn-round form-control last">
+            <a href="{% url 'admin:products' object.category.pk %}">
+              к списку продуктов
             </a>
-          {% endif %}
           </button>
         </div>
         <div class="summary">
@@ -52,15 +38,11 @@
           <p>{{ object.price }} руб</p>
           <b>количество</b>
           <p>{{ object.quantity }}</p>
-        {% if not object.is_active %}
-          <b>Статус:</b>
-          <p style="color:red;"> УДАЛЕН </p>
-        {% endif %}
         </div>
         <div class="product_desc">
           {{ object.short_desc|title }}
         </div>
       </div>
-    {% endfor%}
+
   </div>
 {% endblock %}

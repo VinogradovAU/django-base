@@ -1,0 +1,62 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+ {% block js %}
+    <script src="{% static '/js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static '/js/basket_scripts.js' %}"></script>
+    <link href="{% static '/css/bootstrap.min.css' %}" rel="stylesheet" id="bootstrap-css">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+ {% endblock %}
+
+{% block menu %}
+<div class="hero-white">
+    <div class="header clearfix">
+        <a href="{% url 'main' %}" class="logo"></a>
+
+        {% include 'mainapp/includes/inc_main_menu.html' %}
+
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="details">
+    <div class="links clearfix">
+        {% include 'mainapp/includes/inc_cat_menu.html' %}
+
+    </div>
+
+
+    <div class="details-products">
+        <div class="basket_list">
+        {% include 'basketapp/includes/inc_boot_basket.html' %}
+        </div>
+    </div>
+
+</div>
+
+<div class="related">
+    <div class="related-products clearfix">
+
+        {% for item in products_for_sub_menu %}
+
+        <div class="block">
+            <a href="{% url 'products:index' %}{{ item.category.id }}/{{ item.id }}"><img src="/media/{{ item.image }}"
+                                                                                          width="270" height="270"
+                                                                                          alt="NO PHOTO">
+                <div class="text">
+                    <img src="{% static '/img/icon-hover.png' %}" alt="{{ item.short_desc }}">
+                    <h4>{{ item.name }}</h4>
+                    <p>{{ item.short_desc }}</p>
+                    <p><b>{{ item.price }} руб.</b></p>
+                </div>
+            </a>
+        </div>
+
+        {% endfor %}
+
+
+    </div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,6 @@
+Django==2.2
+freeze==3.0
+Pillow==8.0.1
+pytz==2020.1
+six==1.15.0
+sqlparse==0.4.1

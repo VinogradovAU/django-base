@@ -29,7 +29,7 @@ def main(request):
         "products": products,
         "title": "Магазин",
         "value": value,  # значение даты для вывода в копирайт
-        "basket": get_basket(request.user),
+        # "basket": get_basket(request.user),
    }
     return render(request, 'mainapp/index.html', content)
 
@@ -66,7 +66,7 @@ def product_list(request, pk=None, page=1):
             'links_menu': links_menu,
             'category': category,
             'products': products_paginator,
-            'basket': basket,
+            # 'basket': basket,
         }
 
         return render(request, 'mainapp/products_list.html', content)
@@ -90,7 +90,7 @@ def products(request, pk=None, pk2=None):
             "value": value, # значение даты для вывода в копирайт
             "title": "Каталог",
             "links_menu": links_menu,
-            "basket": get_basket(request.user),
+            # "basket": get_basket(request.user),
         }
 
         return render(request, 'mainapp/prod.html', context)
@@ -110,7 +110,7 @@ def products(request, pk=None, pk2=None):
         "value": value,
         "title": "Каталог",
         "links_menu": links_menu,
-        "basket": get_basket(request.user),
+        # "basket": get_basket(request.user),
     }
 
     return render(request, 'mainapp/products.html', context)
@@ -121,7 +121,7 @@ def contact(request):
     context = {
         "contacts": contacts,
         "title": "Контакты",
-        "basket": get_basket(request.user),
+        # "basket": get_basket(request.user),
     }
 
     return render(request, 'mainapp/contact.html', context)

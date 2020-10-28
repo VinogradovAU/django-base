@@ -1,0 +1,35 @@
+[
+  {
+    "model": "mainapp.contacts",
+    "pk": 1,
+    "fields": {
+      "name": "Адрес1",
+      "city": "Москва",
+      "email": "mail@mail.ru",
+      "phone": "+7-495-777-88-99",
+      "adress": "Кутузовский пр-к, 31"
+    }
+  },
+  {
+    "model": "mainapp.contacts",
+    "pk": 2,
+    "fields": {
+      "name": "Адрес2",
+      "city": "Сочи",
+      "email": "blabla@mail.ru",
+      "phone": "+7-910-546-83-11",
+      "adress": "Полянка 1"
+    }
+  },
+  {
+    "model": "mainapp.contacts",
+    "pk": 3,
+    "fields": {
+      "name": "Адрес 3",
+      "city": "Казань",
+      "email": "kazan@mail.ru",
+      "phone": "+7-000-546-00-11",
+      "adress": "Набережная 22"
+    }
+  }
+]

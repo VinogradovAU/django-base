@@ -8,6 +8,7 @@ urlpatterns = [
     path('user/read/', adminapp.UserListView.as_view(), name='users'), # выводим список пользователей
     path('user/update/<int:pk>/', adminapp.user_update, name='user_update'),
     path('user/delete/<int:pk>/', adminapp.user_delete, name='user_delete'),
+    path('user/user_delete_permanently/<int:pk>/', adminapp.user_delete_permanently, name='user_delete_permanently'),
     path('user/recovery/<int:pk>/', adminapp.user_recovery, name='user_recovery'),
 
     path('categories/create/', adminapp.ProductCategoryCreateView.as_view(), name='category_create'),

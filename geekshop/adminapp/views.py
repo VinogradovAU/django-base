@@ -77,6 +77,22 @@ def user_update(request, pk):
 
 
 @user_passes_test(lambda u: u.is_superuser)
+def user_delete_permanently(request, pk):
+    title = 'удалить на всегда'
+
+    user = get_object_or_404(ShopUser, pk=pk)
+
+    if request.method == 'POST':
+        # вместо удаления лучше сделаем неактивным
+        user.delete()
+        return HttpResponseRedirect(reverse('admin:users'))
+
+    content = {'title': title, 'user_to_delete': user}
+
+    return render(request, 'adminapp/user_delete_permanently.html', content)
+
+
+@user_passes_test(lambda u: u.is_superuser)
 def user_delete(request, pk):
     title = 'пользователи/удаление'
 

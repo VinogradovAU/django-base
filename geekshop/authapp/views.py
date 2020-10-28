@@ -1,10 +1,13 @@
 from django.shortcuts import render, HttpResponseRedirect
-from authapp.forms import ShopUserLoginForms, ShopUserRegisterForm, ShopUserEditForm
+from authapp.forms import ShopUserLoginForms, ShopUserRegisterForm, ShopUserEditForm, ShopUserProfileEditForm
 from django.contrib import auth
 from django.urls import reverse
 from authapp.models import ShopUser
 from django.conf import settings
 from django.core.mail import send_mail
+from django.db import transaction
+
+
 
 def send_verification_email(user):
     verify_link = reverse('auth:verify', args=[user.email, user.activation_key])
@@ -90,17 +93,42 @@ def register(request):
     content = {'title': title, 'register_form': register_form}
     return render(request, 'authapp/register.html', content)
 
+# def edit(request):
+#     title = 'редактирование'
+#
+#     if request.method == 'POST':
+#         edit_form = ShopUserEditForm(request.POST, request.FILES, instance=request.user)
+#         if edit_form.is_valid():
+#             edit_form.save()
+#             return HttpResponseRedirect(reverse('auth:edit'))
+#     else:
+#         edit_form = ShopUserEditForm(instance=request.user)
+#
+#     content = {'title': title, 'edit_form': edit_form }
+#
+#     return render(request, 'authapp/edit.html', content)
+
+
+@transaction.atomic
 def edit(request):
-    title = 'редактирование'
+    title = 'профиль/редактирование'
 
     if request.method == 'POST':
         edit_form = ShopUserEditForm(request.POST, request.FILES, instance=request.user)
-        if edit_form.is_valid():
+        profile_form = ShopUserProfileEditForm(request.POST, instance=request.user.shopuserprofile)
+        if edit_form.is_valid() and profile_form.is_valid():
             edit_form.save()
             return HttpResponseRedirect(reverse('auth:edit'))
     else:
         edit_form = ShopUserEditForm(instance=request.user)
+        profile_form = ShopUserProfileEditForm(
+            instance=request.user.shopuserprofile
+        )
 
-    content = {'title': title, 'edit_form': edit_form }
+    content = {
+        'title': title,
+        'edit_form': edit_form,
+        'profile_form': profile_form
+    }
 
     return render(request, 'authapp/edit.html', content)

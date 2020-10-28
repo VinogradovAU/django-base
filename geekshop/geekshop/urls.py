@@ -26,7 +26,8 @@ urlpatterns = [
     path('contact/', mainapp.contact, name="contact"),
     path('auth/', include('authapp.urls', namespace="auth")),
     path('basket/', include('basketapp.urls', namespace="basket")),
-    path('admin/', include('adminapp.urls', namespace='admin'))
+    path('admin/', include('adminapp.urls', namespace='admin')),
+    path('auth/verify/google/oauth2/', include("social_django.urls", namespace="social")),
 ]
 
 if settings.DEBUG:

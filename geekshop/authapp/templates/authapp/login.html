@@ -18,5 +18,11 @@
             зарегистрироваться
         </a>
     </button>
+    <button class="btn btn-round form-control">
+                    <a href="{% url 'social:begin' 'google-oauth2' %}?next=/">
+         Google+ sign in
+        </a>
+    </button>
+
 
 {% endblock %}

@@ -32,7 +32,7 @@
           <button>
             {% if object.is_active %}
             <a href={% url 'admin:user_delete' object.pk %}>
-              удалить
+              деактивировать
             </a>
             {% endif %}
             {% if not object.is_active %}
@@ -40,6 +40,12 @@
               Восстановить
             </a>
             {% endif %}
+          </button>
+          <button>
+              <a style="color:red;" href={% url 'admin:user_delete_permanently' object.pk %}>
+              удалить
+            </a>
+
           </button>
         </div>
         <div class="user_name">

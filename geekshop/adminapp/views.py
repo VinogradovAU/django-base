@@ -50,6 +50,9 @@ class UserListView(ListView):
     model = ShopUser
     template_name = 'adminapp/users.html'
 
+    def get_queryset(self):
+        return ShopUser.objects.all().order_by('-is_active')
+
     @method_decorator(user_passes_test(lambda u: u.is_superuser))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)

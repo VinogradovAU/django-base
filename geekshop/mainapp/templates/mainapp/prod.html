@@ -83,7 +83,7 @@
             {% for item in products_for_sub_menu %}
 
             <div class="block">
-                <a href="{% url 'products:index' %}{{ item.category.id }}/{{ item.id }}"><img src="/media/{{ item.image }}" width="270" height="270" alt="NO PHOTO">
+                <a href="{% url 'products:index' %}category/{{ item.category.id }}/{{ item.id }}"><img src="/media/{{ item.image }}" width="270" height="270" alt="NO PHOTO">
                     <div class="text">
                         <img src="{% static '/img/icon-hover.png' %}" alt="{{ item.short_desc }}">
                         <h4>{{ item.name }}</h4>

@@ -292,13 +292,14 @@ html, body {
 }
 
 .user_record {
-    height: 125px;
+    height: 150px;
     margin: 15px auto;
     position: relative;
 }
 
 .user_record.not_active {
     opacity: 0.5;
+    height: 150px;
 }
 
 .user_record img {

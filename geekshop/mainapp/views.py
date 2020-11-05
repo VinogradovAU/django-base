@@ -8,6 +8,12 @@ from django.shortcuts import get_object_or_404
 from basketapp.models import Basket
 from basketapp import views
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic import DetailView, DeleteView
+
+
+
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -33,12 +39,28 @@ def main(request):
    }
     return render(request, 'mainapp/index.html', content)
 
+#  переффожу контроллеры на cbv ( с этим - ниже не понятно как рабоатет или нет)
+class ProductMainList(ListView):
+    model = Product
+    template_name = 'mainapp/index.html'
+
+    def get_queryset(self):
+        return Product.objects.filter(is_active=True)[:4]
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductMainList,self).get_context_data(**kwargs)
+        context['title'] = 'Магазин'
+        context['value'] = value
+        print('ya v kontrollere ProductMainList')
+        return context
+
+
 def product_list(request, pk=None, page=1):
     title = 'продукты'
     links_menu = ProductCategory.objects.filter(is_active=True)
     basket = get_basket(request.user)
-    print('pk:', pk)
-    print('page:', page)
+    # print('pk:', pk)
+    # print('page:', page)
 
     if pk != None:
         if pk == 0:

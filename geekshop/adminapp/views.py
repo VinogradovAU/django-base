@@ -76,6 +76,7 @@ def user_update(request, pk):
         'update_form': edit_form,
     }
 
+
     return render(request, 'adminapp/user_update.html', content)
 
 

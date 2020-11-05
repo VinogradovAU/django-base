@@ -50,7 +50,7 @@ def basket_remove(request, pk):
     basket = Basket.objects.filter(user=request.user)
 
     # загружаем названия категорий для формирования меню
-    links_menu = get_links_menu()
+    links_menu = get_links_menu(request)
 
     content = {
         "title": "корзина",
@@ -95,8 +95,7 @@ def basket_edit(request, pk, quantity):
         else:
             new_basket_item.delete()
 
-        basket_items = Basket.objects.filter(user=request.user). \
-            order_by('product__category')
+        basket_items = Basket.get_items(user=request.user)
 
         content = {
             'basket': basket_items,

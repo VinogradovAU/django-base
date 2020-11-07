@@ -97,10 +97,12 @@ DATABASES = {
     #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     # }
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'geekshop',
         'USER': 'django',
         'PASSWORD': 'geekbrains',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -187,7 +189,6 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
     'https://www.googleapis.com/auth/plus.me',
     # 'https://www.googleapis.com/auth/gmail.settings.basic'
 ]
-
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',

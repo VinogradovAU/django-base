@@ -1,0 +1,452 @@
+[
+  {
+    "model": "mainapp.productcategory",
+    "pk": 2,
+    "fields": {
+      "name": "Стулья",
+      "description": "отличные стулья",
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.productcategory",
+    "pk": 3,
+    "fields": {
+      "name": "Диваны",
+      "description": "чтобы лежать",
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.productcategory",
+    "pk": 4,
+    "fields": {
+      "name": "Шкафы",
+      "description": "разные",
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.productcategory",
+    "pk": 5,
+    "fields": {
+      "name": "Кухни",
+      "description": "комплектная",
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.productcategory",
+    "pk": 6,
+    "fields": {
+      "name": "столы",
+      "description": "очень ровные столы",
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.productcategory",
+    "pk": 7,
+    "fields": {
+      "name": "гардероб",
+      "description": "все для вашего гардероба",
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.productcategory",
+    "pk": 8,
+    "fields": {
+      "name": "newcat-1",
+      "description": "newcat-1newcat-1newcat-1newcat-1newcat-1newcat-1newcat-1newcat-1newcat-1",
+      "is_active": false
+    }
+  },
+  {
+    "model": "mainapp.productcategory",
+    "pk": 9,
+    "fields": {
+      "name": "newcat-2",
+      "description": "a/slkvmalsmv alksval;ksv",
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.productcategory",
+    "pk": 10,
+    "fields": {
+      "name": "newcat-33",
+      "description": "/lkremlskt;sl kdgвмваипдыаьлыт адпли ыдвал иыдлвааь дылвьи длыьп пидлы апдлт 9348394 lkdsgjb sld",
+      "is_active": false
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 1,
+    "fields": {
+      "category": 2,
+      "name": "Удобный стул",
+      "image": "products_images/удоный_стул.jpg",
+      "short_desc": "Коротко - удобный стул",
+      "description": "- удобный стул - удобный стул - удобный стул - удобный стул - удобный стул - удобный стул - удобный стул - удобный стул - удобный стул",
+      "price": "1200.50",
+      "quantity": 35,
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 2,
+    "fields": {
+      "category": 3,
+      "name": "Диван1",
+      "image": "products_images/диван1.jpg",
+      "short_desc": "Коротко о диване1",
+      "description": "Полное описание дивана1, полное описание дивана1, полное описание дивана1, полное описание дивана1, полное описание дивана1, полное описание дивана1, полное описание дивана1, полное описание дивана1, полное описание дивана1, полное описание дивана1lkjlkjlkj",
+      "price": "33000.10",
+      "quantity": 2,
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 3,
+    "fields": {
+      "category": 4,
+      "name": "Шкаф 1",
+      "image": "products_images/шкаф1.jpg",
+      "short_desc": "Простой Шкаф",
+      "description": "Простой шкаф - Простой шкаф - Простой шкаф - Простой шкаф - Простой шкаф - Простой шкаф",
+      "price": "27000.00",
+      "quantity": 8,
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 4,
+    "fields": {
+      "category": 4,
+      "name": "Тестовый шкаф",
+      "image": "products_images/шкаф2.jpg",
+      "short_desc": "Очень коротко и тестовом шкафе",
+      "description": "dhaeth",
+      "price": "0.00",
+      "quantity": 0,
+      "is_active": false
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 5,
+    "fields": {
+      "category": 5,
+      "name": "Кухня 1",
+      "image": "products_images/кухня01.jpg",
+      "short_desc": "материал фасада: МДФ ПВХ",
+      "description": "1. для направляющих к ящикам используются метабоксы\r\n2. все предметы, указанные на фото с фурнитурой (без бытовой техники, бронзовых ручек и дополнительной комплектации)\r\n3. комплектуется пластиковыми ручками (ручки как на фото комплектуются отдельно за дополнительную плату)\r\n4. в цену композиции СТОЛЕШНИЦА НЕ ВХОДИТ, есть возможность изготовления цельной или раздельной столешницы за дополнительную плату\r\n5. витражные элементы комплектуются стеклом крезет",
+      "price": "65000.00",
+      "quantity": 3,
+      "is_active": false
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 6,
+    "fields": {
+      "category": 5,
+      "name": "КУХНЯ ДЕЛИ 04",
+      "image": "products_images/кухня02.jpg",
+      "short_desc": "комплектация: набирается поэлементно",
+      "description": "1. все предметы, указанные на фото с фурнитурой (без бытовой техники и дополнительной комплектации)\r\n2. столешница толщиной 28мм. цвет: Итальянская мозаика, раздельная для каждого предмета\r\n3. есть возможность изготовления цельной столешницы за дополнительную плату\r\n4. витражные элементы комплектуются стеклом крезет",
+      "price": "22800.00",
+      "quantity": 7,
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 7,
+    "fields": {
+      "category": 6,
+      "name": "Стол №1",
+      "image": "products_images/Стол1.jpg",
+      "short_desc": "Вот такой стол",
+      "description": "Описание стола №1 . Стол деревянный, четыре ноги.",
+      "price": "12500.00",
+      "quantity": 2,
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 8,
+    "fields": {
+      "category": 6,
+      "name": "Стол №2",
+      "image": "products_images/Стол2.jpg",
+      "short_desc": "Вот такой стол №2",
+      "description": "Описание стола №2 . Стол как стол - бери и пользуйся",
+      "price": "10500.00",
+      "quantity": 5,
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 9,
+    "fields": {
+      "category": 7,
+      "name": "Гардероб 1",
+      "image": "products_images/Гардероб1.jpg",
+      "short_desc": "Это гардероб 1",
+      "description": "Описание гардероба 1 . Все про гардероб.",
+      "price": "23500.00",
+      "quantity": 2,
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 10,
+    "fields": {
+      "category": 7,
+      "name": "Гардероб 2",
+      "image": "products_images/Гардероб2.webp",
+      "short_desc": "гардероб 2 - гардероб 2",
+      "description": "Описание гардероба 2 . Все про гардероб 2........",
+      "price": "9500.00",
+      "quantity": 5,
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 11,
+    "fields": {
+      "category": 2,
+      "name": "Стул «Луи / Фуксия»",
+      "image": "products_images/Стул_луи.jpg",
+      "short_desc": "бархат, лесной орех",
+      "description": "Для стульев, занимающих центр обстановки, выбор цвета важен не менее, чем выносливость и долговечность",
+      "price": "17900.00",
+      "quantity": 7,
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 12,
+    "fields": {
+      "category": 2,
+      "name": "Стул Этюд Т4",
+      "image": "products_images/Стул_этюд_т4.jpg",
+      "short_desc": "Текстиль, массив, бежевый",
+      "description": "Страна производитель Россия\r\nГабариты товара Среднегабарит\r\nМатериал ножек Массив\r\nЦвет каркаса Орех, Коричневый, Коричневый темный\r\nРазмер (ШхВхГ, см) 51,5х100х43,5\r\nЦвет ножек Орех\r\nСроки доставки (дни) 5",
+      "price": "14000.00",
+      "quantity": 0,
+      "is_active": false
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 13,
+    "fields": {
+      "category": 2,
+      "name": "Стул для посетителей",
+      "image": "products_images/Стул_офисный.jpeg",
+      "short_desc": "Стандарт черный (ткань/черный металл)",
+      "description": "Офисный стул для посетителей Стандарт со спинкой из ткани черного цвета. Каркас выполнен из металла с износостойким напылением черного металла.",
+      "price": "7000.00",
+      "quantity": 56,
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 14,
+    "fields": {
+      "category": 3,
+      "name": "Диван Мадейра Lux",
+      "image": "products_images/Мадейра_люкс.jpg",
+      "short_desc": "велюр, искусственная кожа",
+      "description": "Диван Мадейра Lux поможет сделать просмотр нового фильма в кругу семьи или друзей не только увлекательным, но и максимально комфортным",
+      "price": "59900.00",
+      "quantity": 10,
+      "is_active": false
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 15,
+    "fields": {
+      "category": 3,
+      "name": "Угловой диван-кровать Стефани",
+      "image": "products_images/Диван-Стефани.jpg",
+      "short_desc": "Стефани, Россия , 18 месяцев",
+      "description": "Угловой диван Стефани с бархатистой обивкой выполнен в контрастной цветовой гамме. Элегантная геометрия подлокотников привносит в дизайн изящную декоративность. Множество мягких подушечек создают ощущение уюта.",
+      "price": "37700.00",
+      "quantity": 13,
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 16,
+    "fields": {
+      "category": 3,
+      "name": "Диван-кровать Мэдисон",
+      "image": "products_images/Медисон.jpg",
+      "short_desc": "Диван-кровать",
+      "description": "Диван-кровать Мэдисон с системой трансформации «Еврокнижка» («Альтернатива») предназначен для ежедневного использования. Выкатные сиденья и откидные спинки образуют спальное место.",
+      "price": "41999.00",
+      "quantity": 4,
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 17,
+    "fields": {
+      "category": 4,
+      "name": "Шкаф Зодиак",
+      "image": "products_images/Зодиак.jpg",
+      "short_desc": "Распашной шкаф",
+      "description": "Наполнение шкафа: бельевое отделение с полками (3 полки) и платяное отделение (с полкой и штангой)\r\nМатериал: ЛДСП\r\nПримечание: возможно исполнение в зеркальном отображении, поставляется в разобранном виде",
+      "price": "10750.00",
+      "quantity": 10,
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 18,
+    "fields": {
+      "category": 4,
+      "name": "Шкаф Trio",
+      "image": "products_images/Шкаф_Трио.jpg",
+      "short_desc": "Двухдверный шкаф",
+      "description": "Вешалка алюминиевая со встроенным светодиодным освещением и с датчиками реагирующими на движение, оснащенные батарейками.Установленные доводчики способствует плавному закрытию дверцы шкафчика, что полностью исключает резкие щелчки и стук.",
+      "price": "41199.00",
+      "quantity": 2,
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 19,
+    "fields": {
+      "category": 6,
+      "name": "Стол Милан-5",
+      "image": "products_images/Стол_Милан.jpg",
+      "short_desc": "Стол для работы",
+      "description": "Небольшой стол для домашнего кабинета, изготовлен из ДСП 16 мм, кромка 0,4 мм. Цвет стола  - дуб сонома. Для создания функционального рабочего места",
+      "price": "2199.00",
+      "quantity": 6,
+      "is_active": false
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 20,
+    "fields": {
+      "category": 6,
+      "name": "Стол Дрофа",
+      "image": "products_images/Стол_Дрофа.jpg",
+      "short_desc": "Компьютерный стол",
+      "description": "Если Вы хотите приобрести удобный компьютерный стол для Вашего дома или офиса, то рекомендуем Вам обратить внимание на компьютерный стол КС-14М Дрофа.",
+      "price": "8100.00",
+      "quantity": 12,
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 21,
+    "fields": {
+      "category": 6,
+      "name": "Стол Гранд-2",
+      "image": "products_images/Стол_Обеденный.jpg",
+      "short_desc": "Стол в гостиную",
+      "description": "Обеденный стол Гранд полностью соответствует своему названию – вокруг него можно с комфортом рассадить всех гостей. Конструкция стола позволяет регулировать увеличение длины столешницы",
+      "price": "34999.00",
+      "quantity": 4,
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 24,
+    "fields": {
+      "category": 5,
+      "name": "Кухонный гарнитур Бланка",
+      "image": "products_images/Куння_Бланка.jpg",
+      "short_desc": "Для маленькой кухни",
+      "description": "Гарнитур занимает немного места, очень вместителен, удобен, для маленького помещения- самое ТО.",
+      "price": "18890.00",
+      "quantity": 6,
+      "is_active": false
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 25,
+    "fields": {
+      "category": 7,
+      "name": "Вешалка-гардероб Sheffilton",
+      "image": "products_images/Вешалка.jpg",
+      "short_desc": "(металл/пластик/плотная ткань)",
+      "description": "Вешалка хорошего качества, очень легко собирается. Великолепный вариант для тех, кто живёт на съёмной квартире или только въехал в свою новую.",
+      "price": "1540.00",
+      "quantity": 21,
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 26,
+    "fields": {
+      "category": 7,
+      "name": "Гардероб детский babystep",
+      "image": "products_images/Детский_Гардероб.jpeg",
+      "short_desc": "Классика, 1230 закрытый со съемной полкой",
+      "description": "Гардероб включает:\r\n1) Полочки и штангу, чтобы вешать одежду\r\n2) Нижнюю съемную полку, которую можно использовать как отдельную тумбу\r\n3) Круглые деревянные ручки, удобные для захвата детской рукой\r\n4) Дверцы с автодоводчиками\r\n5) Ножки, которые позволяют регулировать высоту гардероба\r\n6) Комплект креплений к стене",
+      "price": "6950.00",
+      "quantity": 15,
+      "is_active": true
+    }
+  },
+  {
+    "model": "mainapp.contacts",
+    "pk": 1,
+    "fields": {
+      "name": "Адрес1",
+      "city": "Москва",
+      "email": "mail@mail.ru",
+      "phone": "+7-495-777-88-99",
+      "adress": "Кутузовский пр-к, 31"
+    }
+  },
+  {
+    "model": "mainapp.contacts",
+    "pk": 2,
+    "fields": {
+      "name": "Адрес2",
+      "city": "Сочи",
+      "email": "blabla@mail.ru",
+      "phone": "+7-910-546-83-11",
+      "adress": "Полянка 1"
+    }
+  },
+  {
+    "model": "mainapp.contacts",
+    "pk": 3,
+    "fields": {
+      "name": "Адрес 3",
+      "city": "Казань",
+      "email": "kazan@mail.ru",
+      "phone": "+7-000-546-00-11",
+      "adress": "Набережная 22"
+    }
+  }
+]

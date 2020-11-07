@@ -22,7 +22,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 
 try:
-    with open(f'{BASE_DIR}\geekshop\key_conf.json') as fd:
+    # with open(f'{BASE_DIR}\geekshop\key_conf.json') as fd:
+    with open('key_conf.json') as fd:
         data_from_key_config = json.load(fd)
         SECRET_KEY = data_from_key_config['SECRET_KEY']
 except Exception:

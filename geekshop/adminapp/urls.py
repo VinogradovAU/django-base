@@ -26,4 +26,8 @@ urlpatterns = [
     # path('product/read/category/<int:pk>/', adminapp.products, name='products'),  # выводим один продукт
     # path('categories/delete/<int:pk>/', adminapp.category_delete, name='category_delete'),
     # path('categories/recovery/<int:pk>/', adminapp.category_recovery, name='category_recovery'),
+
+    path('orders/read/', adminapp.OrdersListView.as_view(), name='orders'),  # выводим список заказов
+    path('orders/<int:pk>/', adminapp.order_status_change, name='order_status_change'),  # выводим список заказов
+
 ]

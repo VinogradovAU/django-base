@@ -22,5 +22,13 @@
         :<span>{{ category.name }}</span>
       {% endif %}
     </a>
+
+    <a href="{% url 'admin:orders' %}"
+       class="{% if request.resolver_match.url_name == 'orders' or category.name %}
+                active
+              {% endif %}">
+      заказы
+
+    </a>
   </li>
 </ul>

@@ -11,6 +11,7 @@ from django.views.generic.list import ListView
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import DetailView, DeleteView
+from ordersapp.models import Order
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -409,3 +410,26 @@ class ProductRecoveryView(UpdateView):
     def get_success_url(self):
         self.object = self.get_object()
         return HttpResponseRedirect(reverse_lazy('admin:products', kwargs={'pk': self.object.category.pk}))
+
+
+class OrdersListView(ListView):
+    model = Order
+    template_name = 'adminapp/orders_list.html'
+
+    def get_queryset(self, *args, **kwargs):
+        return super(OrdersListView, self).get_queryset().exclude(status=Order.CANCEL)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # print('context:', context)
+        context['title'] = 'Заказы/список'
+        return context
+
+def order_status_change(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+    if order.status == Order.FORMING:
+        order.status = Order.SENT_TO_PROCEED
+    elif order.status == Order.SENT_TO_PROCEED:
+        order.status = Order.PROCEEDED
+    order.save()
+    return HttpResponseRedirect(reverse('adminapp:orders'))

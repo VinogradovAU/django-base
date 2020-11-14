@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.shortcuts import get_object_or_404, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, HttpResponseRedirect, HttpResponse
 from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
 from django.db import transaction
@@ -81,28 +81,68 @@ class OrderItemsUpdate(UpdateView):
 
     def get_context_data(self, **kwargs):
         data = super(OrderItemsUpdate, self).get_context_data(**kwargs)
+        data['error'] = 0
+        data['error_msg'] = []
 
         # ----------
         OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=1)
 
         if self.request.POST:
-            data['orderitems'] = OrderFormSet(self.request.POST, instance=self.object)
+
+
+            print('Обработка POST формы')
+            data['orderitems'] = OrderFormSet(self.request.POST or None, instance=self.object)
+            # print(data['orderitems'].cleaned_data)
+            # print('request----------->', self.request)
+            # print('object----------->', self.object.id)
+
+            # проверка количестки товара в форме и количества на складе (в базе)
+            # if data['orderitems'].is_valid():
+            #     for elem in data['orderitems'].cleaned_data:
+            #         if len(elem):
+            #             print('Проверка количества товара')
+            #             print('elem----->', elem)
+            #             if elem.get('id').product.quantity == 0:
+            #                 data['error'] = 1
+            #                 data['error_msg'].append(f"Товара {elem.get('product')} нет на складе")
+            #                 elem['quantity'] = 0
+            #                 return data
+            #             if elem.get('quantity') > elem.get('id').product.quantity:
+            #
+            #                 data['error'] = 1
+            #                 data['error_msg'].append(f"Товара {elem.get('product')} на складе {elem.get('id').product.quantity} шт.")
+            #                 elem['quantity'] = elem.get('id').product.quantity
+            #                 return data
+
+
+
+
         else:
             formset = OrderFormSet(instance=self.object)
             for form in formset:
                 if form.instance.pk:
                     form.initial['price'] = form.instance.product.price
-
-
+                    # print('form.fields---->', form.fields)
+                    # print('form.errors---->',form.errors)
             data['orderitems'] = formset
         # ---------
         data['title'] = 'заказ/редактирование'
         return data
 
     def form_valid(self, form):
-        context = self.get_context_data()
-        orderitems = context['orderitems']
 
+        # print('Валидация формы')
+        context = self.get_context_data()
+        # print('context---->', context)
+        orderitems = context['orderitems']
+        # print("context_error ---> ", context['error'])
+        # print("error_msg ---> ", context['error_msg'])
+
+        # if context['error']:
+        #     self.success_url = reverse_lazy('ordersapp:order_update', kwargs={'pk': self.object.id})
+
+
+        # if not context['error']:
         with transaction.atomic():
             self.object = form.save()
             if orderitems.is_valid():
@@ -123,8 +163,8 @@ def order_forming_complete(request, pk):
 
     return HttpResponseRedirect(reverse('ordersapp:orders_list'))
 
-def order_ajax_price(request, pk, select_num):
 
+def order_ajax_price(request, pk, select_num):
     # print('я в order_ajax_price')
     # print(f'select_num - > {select_num} ')
 
@@ -141,7 +181,7 @@ def order_ajax_price(request, pk, select_num):
         # print('product_price ->', order_item_obj.product.price)
         # print('product_id ->', order_item_obj.product.id)
         products = Product.objects.all()
-        product_price = products[select_num-1].price
+        product_price = products[select_num - 1].price
         class_num = int(pk)
         content = {
             'product_price': product_price,
@@ -151,6 +191,7 @@ def order_ajax_price(request, pk, select_num):
         result = render_to_string('ordersapp/includes/inc_boot_order.html', content)
 
         return JsonResponse({'result': result})
+
 
 class OrderRead(DetailView):
     model = Order

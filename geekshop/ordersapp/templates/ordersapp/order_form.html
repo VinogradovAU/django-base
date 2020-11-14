@@ -3,6 +3,9 @@
 
 {% block content %}
    {% include 'ordersapp/includes/inc_order_summary.html' %}
+    {% if error %}
+    {{ error_msg }}
+    {% endif %}
    <div class="order_form">
        <form action="" method="post">
            {% csrf_token %}

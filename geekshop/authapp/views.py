@@ -6,6 +6,9 @@ from authapp.models import ShopUser
 from django.conf import settings
 from django.core.mail import send_mail
 from django.db import transaction
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
 
 
 
@@ -110,6 +113,7 @@ def register(request):
 
 
 @transaction.atomic
+@login_required()
 def edit(request):
     title = 'профиль/редактирование'
 

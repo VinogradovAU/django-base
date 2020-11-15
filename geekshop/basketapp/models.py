@@ -33,20 +33,23 @@ class Basket(models.Model):
     @property
     def total_quantity(self):
         "возвращает общее количнество всех товаров в корзине"
-        _items = Basket.objects.filter(user=self.user).exclude(is_active=False)
+        # _items = Basket.objects.filter(user=self.user).exclude(is_active=False).select_related()
+        _items = Basket.objects.filter(user=self.user, is_active=True).select_related()
         _totalquantity = sum(list(map(lambda x: x.quantity, _items)))
         return _totalquantity
 
     @property
     def total_cost(self):
         "возвращает ИОТОГО всей корзины - всех покупок"
-        _items = Basket.objects.filter(user=self.user).exclude(is_active=False)
+        # _items = Basket.objects.filter(user=self.user).exclude(is_active=False).select_related()
+        _items = Basket.objects.filter(user=self.user).exclude(is_active=False).select_related()
         _totalcost = sum(list(map(lambda x: x.product_cost, _items)))
         return _totalcost
 
     @staticmethod
     def get_items(user):
-        return Basket.objects.filter(user=user).order_by('product__category')
+        result = Basket.objects.filter(user=user).select_related('product').order_by('product__category')
+        return result
 
     # def save(self, *args, **kwargs):
     #     if self.pk:

@@ -23,13 +23,13 @@ value = datetime.datetime.now()  # значение даты для вывода
 
 def get_basket(user):
     if user.is_authenticated:
-        return Basket.objects.filter(user=user)
+        return Basket.objects.filter(user=user).select_related()
     else:
         return []
 
 def main(request):
     #получаем продукты для вывода на главную
-    products = Product.objects.all()[:4]
+    products = Product.objects.all()[:4].select_related()
 
     content = {
         "products": products,
@@ -45,19 +45,19 @@ class ProductMainList(ListView):
     template_name = 'mainapp/index.html'
 
     def get_queryset(self):
-        return Product.objects.filter(is_active=True)[:4]
+        return Product.objects.filter(is_active=True).select_related()[:4]
 
     def get_context_data(self, **kwargs):
         context = super(ProductMainList,self).get_context_data(**kwargs)
         context['title'] = 'Магазин'
         context['value'] = value
-        print('ya v kontrollere ProductMainList')
+        # print('ya v kontrollere ProductMainList')
         return context
 
 
 def product_list(request, pk=None, page=1):
     title = 'продукты'
-    links_menu = ProductCategory.objects.filter(is_active=True)
+    links_menu = get_links_menu()
     basket = get_basket(request.user)
     # print('pk:', pk)
     # print('page:', page)
@@ -68,12 +68,12 @@ def product_list(request, pk=None, page=1):
                 'pk': 0,
                 'name': 'все',
             }
-            products = Product.objects.filter(is_active=True, category__is_active=True).order_by('price')
+            products = Product.objects.filter(is_active=True, category__is_active=True).select_related().order_by('price')
 
         else:
 
             category = get_object_or_404(ProductCategory, pk=pk)
-            products = Product.objects.filter(category__pk=pk, is_active=True, category__is_active=True).order_by('price')
+            products = Product.objects.filter(category__pk=pk, is_active=True, category__is_active=True).select_related().order_by('price')
 
         paginator = Paginator(products, 3)
         try:
@@ -97,13 +97,14 @@ def product_list(request, pk=None, page=1):
 def products(request, pk=None, pk2=None):
 
     #загружаем названия категорий для формирования меню
-    links_menu = ProductCategory.objects.all().exclude(is_active=False)
+    links_menu = get_links_menu()
 
     if pk != None and pk2 != None:         # прилетели данные на конкретный продукт, его и выводим
         product_item = get_object_or_404(Product.objects, id=pk2)
 
         # товары для похожих товаров, та же категория, но кроме показываемого уже
-        products_for_sub_menu = Product.objects.filter(category__id=pk).exclude(id=pk2)[:3]
+        products_for_sub_menu = Product.objects.filter(category__id=pk, is_active=True).\
+                                    exclude(id=pk2).select_related('category')[:3]
 
         context = {
             "category_num": pk,
@@ -119,11 +120,11 @@ def products(request, pk=None, pk2=None):
 
     # при переходе на страницу продуктов выводим случайные товары
     if pk == None:
-        products = Product.objects.order_by('?')[:4]
+        products = Product.objects.order_by('?').select_related()[:4]
 
     else:
         # если указана категория товаров, то выводим товары
-        products = Product.objects.filter(category=pk).order_by('price')
+        products = Product.objects.filter(category=pk).select_related().order_by('price')
 
 
 
@@ -139,7 +140,7 @@ def products(request, pk=None, pk2=None):
 
 
 def contact(request):
-    contacts = Contacts.objects.all()[:3]
+    contacts = Contacts.objects.all().select_related()[:3]
     context = {
         "contacts": contacts,
         "title": "Контакты",
@@ -147,3 +148,7 @@ def contact(request):
     }
 
     return render(request, 'mainapp/contact.html', context)
+
+
+def get_links_menu():
+    return ProductCategory.objects.filter(is_active=True).select_related()

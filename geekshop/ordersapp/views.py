@@ -114,9 +114,6 @@ class OrderItemsUpdate(UpdateView):
             #                 elem['quantity'] = elem.get('id').product.quantity
             #                 return data
 
-
-
-
         else:
             formset = OrderFormSet(instance=self.object)
             for form in formset:
@@ -180,8 +177,11 @@ def order_ajax_price(request, pk, select_num):
         # print('product_price ->', order_item_obj)
         # print('product_price ->', order_item_obj.product.price)
         # print('product_id ->', order_item_obj.product.id)
-        products = Product.objects.all()
-        product_price = products[select_num - 1].price
+
+        products = Product.objects.get(id=select_num - 1)
+        # products = Product.objects.all()
+        # product_price = products[select_num - 1].price
+        product_price = products.price
         class_num = int(pk)
         content = {
             'product_price': product_price,

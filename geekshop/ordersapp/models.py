@@ -83,10 +83,10 @@ class OrderItem(models.Model):
 
     @staticmethod
     def get_item(pk):
-        items = OrderItem.objects.all()
+        # items = OrderItem.objects.all()
 
         # for k in items:
         #     print(k)
         #     print(k.id, k.product.name)
 
-        return OrderItem.objects.get(pk=pk)
+        return OrderItem.objects.get(pk=pk).select_related()

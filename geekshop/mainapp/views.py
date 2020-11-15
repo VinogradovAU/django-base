@@ -100,7 +100,7 @@ def products(request, pk=None, pk2=None):
     links_menu = get_links_menu()
 
     if pk != None and pk2 != None:         # прилетели данные на конкретный продукт, его и выводим
-        product_item = get_object_or_404(Product.objects, id=pk2)
+        product_item = get_object_or_404(Product.objects.select_related('category'), id=pk2)
 
         # товары для похожих товаров, та же категория, но кроме показываемого уже
         products_for_sub_menu = Product.objects.filter(category__id=pk, is_active=True).\

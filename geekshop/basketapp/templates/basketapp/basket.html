@@ -2,9 +2,9 @@
 {% load static %}
 
  {% block js %}
-    <script src="{% static '/js/jquery-3.2.1.min.js' %}"></script>
-    <script src="{% static '/js/basket_scripts.js' %}"></script>
-    <link href="{% static '/css/bootstrap.min.css' %}" rel="stylesheet" id="bootstrap-css">
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/basket_scripts.js' %}"></script>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" id="bootstrap-css">
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
  {% endblock %}
@@ -46,7 +46,7 @@
                                                                                           width="270" height="270"
                                                                                           alt="NO PHOTO">
                 <div class="text">
-                    <img src="{% static '/img/icon-hover.png' %}" alt="{{ item.short_desc }}">
+                    <img src="{% static 'img/icon-hover.png' %}" alt="{{ item.short_desc }}">
                     <h4>{{ item.name }}</h4>
                     <p>{{ item.short_desc }}</p>
                     <p><b>{{ item.price }} руб.</b></p>

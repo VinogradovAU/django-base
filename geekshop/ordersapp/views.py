@@ -17,6 +17,8 @@ from ordersapp.forms import OrderItemForm
 from mainapp.models import Product
 from django.dispatch import receiver
 from django.db.models.signals import pre_save, pre_delete
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 
 class OrderList(ListView):
@@ -25,11 +27,19 @@ class OrderList(ListView):
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user, is_active=True)
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(ListView, self).dispatch(*args, **kwargs)
+
 
 class OrderItemsCreate(CreateView):
     model = Order
     fields = []
     success_url = reverse_lazy('ordersapp:orders_list')
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(CreateView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         data = super(OrderItemsCreate, self).get_context_data(**kwargs)
@@ -79,6 +89,10 @@ class OrderItemsUpdate(UpdateView):
     fields = []
     success_url = reverse_lazy('ordersapp:orders_list')
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(UpdateView, self).dispatch(*args, **kwargs)
+
     def get_context_data(self, **kwargs):
         data = super(OrderItemsUpdate, self).get_context_data(**kwargs)
         data['error'] = 0
@@ -88,7 +102,6 @@ class OrderItemsUpdate(UpdateView):
         OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=1)
 
         if self.request.POST:
-
 
             print('Обработка POST формы')
             data['orderitems'] = OrderFormSet(self.request.POST or None, instance=self.object)
@@ -137,7 +150,6 @@ class OrderItemsUpdate(UpdateView):
 
         # if context['error']:
         #     self.success_url = reverse_lazy('ordersapp:order_update', kwargs={'pk': self.object.id})
-
 
         # if not context['error']:
         with transaction.atomic():

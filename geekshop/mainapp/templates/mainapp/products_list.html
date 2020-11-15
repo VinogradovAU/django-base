@@ -46,7 +46,7 @@
         <div class="block">
             <a href="{% url 'products:index' %}category/{{ product.category.id }}/{{ product.id }}"><img src="/media/{{ product.image }}" width="270" height="270" alt="">
                 <div class="text">
-                    <img src="{% static '/img/icon-hover.png' %}" alt="{{ product.short_desc }}">
+                    <img src="{% static 'img/icon-hover.png' %}" alt="{{ product.short_desc }}">
                     <h3>{{ product.category.name }}</h3>
                     <h4>{{ product.name }}</h4>
                     <p>{{ product.short_desc }}</p>

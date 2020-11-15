@@ -85,7 +85,7 @@
             <div class="block">
                 <a href="{% url 'products:index' %}category/{{ item.category.id }}/{{ item.id }}"><img src="/media/{{ item.image }}" width="270" height="270" alt="NO PHOTO">
                     <div class="text">
-                        <img src="{% static '/img/icon-hover.png' %}" alt="{{ item.short_desc }}">
+                        <img src="{% static 'img/icon-hover.png' %}" alt="{{ item.short_desc }}">
                         <h4>{{ item.name }}</h4>
                         <p>{{ item.short_desc }}</p>
                         <p><b>{{ item.price }} руб.</b></p>

@@ -10,6 +10,7 @@ urlpatterns = [
     path('user/delete/<int:pk>/', adminapp.user_delete, name='user_delete'),
     path('user/user_delete_permanently/<int:pk>/', adminapp.user_delete_permanently, name='user_delete_permanently'),
     path('user/recovery/<int:pk>/', adminapp.user_recovery, name='user_recovery'),
+    path('sys_info/', adminapp.sys_info, name='sys_info'),
 
     path('categories/create/', adminapp.ProductCategoryCreateView.as_view(), name='category_create'),
     path('categories/read/', adminapp.CategoryListView.as_view(), name='categories'),  # выводим список категорий

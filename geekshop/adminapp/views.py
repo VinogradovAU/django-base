@@ -77,7 +77,6 @@ def user_update(request, pk):
         'update_form': edit_form,
     }
 
-
     return render(request, 'adminapp/user_update.html', content)
 
 
@@ -215,7 +214,6 @@ class ProductCategoryDeteleView(DeleteView):
         return context
 
 
-
 # @user_passes_test(lambda u: u.is_superuser)
 # def category_delete(request, pk):
 #     title = 'категории/удаление'
@@ -248,6 +246,7 @@ class ProductCategoryRecoveryView(UpdateView):
 
     def get_success_url(self):
         return HttpResponseRedirect(self.success_url)
+
 
 # @user_passes_test(lambda u: u.is_superuser)
 # def category_recovery(request, pk):
@@ -375,10 +374,10 @@ class ProductDeleteView(DeleteView):
         context['pk'] = self.object.pk
         return context
 
-
     def get_success_url(self):
         self.object = self.get_object()
         return HttpResponseRedirect(reverse_lazy('admin:products', kwargs={'pk': self.object.pk}))
+
 
 # @user_passes_test(lambda u: u.is_superuser)
 # def product_update(request, pk):
@@ -400,6 +399,7 @@ class ProductRecoveryView(UpdateView):
         self.object.is_active = True
         self.object.save()
         return self.get_success_url()
+
     # def form_valid(self, form):
     #     # self.object = form.save(commit=True)
     #     self.object = self.get_object()
@@ -425,6 +425,7 @@ class OrdersListView(ListView):
         context['title'] = 'Заказы/список'
         return context
 
+
 def order_status_change(request, pk):
     order = get_object_or_404(Order, pk=pk)
     if order.status == Order.FORMING:
@@ -433,3 +434,10 @@ def order_status_change(request, pk):
         order.status = Order.PROCEEDED
     order.save()
     return HttpResponseRedirect(reverse('adminapp:orders'))
+
+
+def sys_info(request):
+    context = {
+        'name_file_map_models': 'geekshop_visualized.png'
+    }
+    return render(request, 'adminapp/sys_info.html', context)

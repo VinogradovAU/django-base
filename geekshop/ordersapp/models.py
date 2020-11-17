@@ -89,4 +89,4 @@ class OrderItem(models.Model):
         #     print(k)
         #     print(k.id, k.product.name)
 
-        return OrderItem.objects.get(pk=pk).select_related()
+        return OrderItem.objects.get(pk=pk)

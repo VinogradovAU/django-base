@@ -104,36 +104,22 @@ class OrderItemsUpdate(UpdateView):
         if self.request.POST:
 
             print('Обработка POST формы')
-            data['orderitems'] = OrderFormSet(self.request.POST or None, instance=self.object)
-            # print(data['orderitems'].cleaned_data)
-            # print('request----------->', self.request)
-            # print('object----------->', self.object.id)
+            myformset = OrderFormSet(self.request.POST or None, instance=self.object)
+            data['orderitems'] = myformset
 
             # проверка количестки товара в форме и количества на складе (в базе)
-            # if data['orderitems'].is_valid():
-            #     for elem in data['orderitems'].cleaned_data:
-            #         if len(elem):
-            #             print('Проверка количества товара')
-            #             print('elem----->', elem)
-            #             if elem.get('id').product.quantity == 0:
-            #                 data['error'] = 1
-            #                 data['error_msg'].append(f"Товара {elem.get('product')} нет на складе")
-            #                 elem['quantity'] = 0
-            #                 return data
-            #             if elem.get('quantity') > elem.get('id').product.quantity:
-            #
-            #                 data['error'] = 1
-            #                 data['error_msg'].append(f"Товара {elem.get('product')} на складе {elem.get('id').product.quantity} шт.")
-            #                 elem['quantity'] = elem.get('id').product.quantity
-            #                 return data
+            # проверка идет в forms.py---> clean() - результат в errors
+            if not myformset.is_valid():
+                print('есть ошибка!!!!!!!!!!')
+                # print('non_field_error', myformset.non_field_error())
+                print('errors', myformset.errors)
 
         else:
             formset = OrderFormSet(instance=self.object)
             for form in formset:
                 if form.instance.pk:
                     form.initial['price'] = form.instance.product.price
-                    # print('form.fields---->', form.fields)
-                    # print('form.errors---->',form.errors)
+
             data['orderitems'] = formset
         # ---------
         data['title'] = 'заказ/редактирование'
@@ -141,17 +127,21 @@ class OrderItemsUpdate(UpdateView):
 
     def form_valid(self, form):
 
-        # print('Валидация формы')
+        print('Валидация формы')
         context = self.get_context_data()
-        # print('context---->', context)
+
         orderitems = context['orderitems']
-        # print("context_error ---> ", context['error'])
-        # print("error_msg ---> ", context['error_msg'])
 
-        # if context['error']:
-        #     self.success_url = reverse_lazy('ordersapp:order_update', kwargs={'pk': self.object.id})
+        if any(orderitems.errors):
+            print(self.object.id)
+            # success_url = reverse_lazy(f'ordersapp:order_update {self.object.id}')
+            print('orderitems.errors---->>>>', orderitems.errors)
+            # return super(OrderItemsUpdate, self).form_valid(form)
+            # return HttpResponseRedirect(reverse_lazy('ordersapp:order_update',
+            #                                          kwargs={'pk': self.object.id}))
+            return HttpResponseRedirect(self.request.META.get('HTTP_REFERER'))
 
-        # if not context['error']:
+
         with transaction.atomic():
             self.object = form.save()
             if orderitems.is_valid():

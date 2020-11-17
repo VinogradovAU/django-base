@@ -6,13 +6,16 @@
     {% if error %}
     {{ error_msg }}
     {% endif %}
+
    <div class="order_form">
        <form action="" method="post">
            {% csrf_token %}
            {{ form.as_p }}
            <table class="table">
                {{ orderitems.management_form }}
+
                {% for form in orderitems.forms %}
+                    {{ form.errors }}
                    {% if forloop.first %}
                        <thead>
                        <tr>

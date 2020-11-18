@@ -39,13 +39,13 @@ class OrderItemForm(forms.ModelForm):
         # print('self.fields----->', self.fields.items())
 
         if self.cleaned_data['product'].quantity == 0:
-            self.add_error(self.fields['quantity'], '000000нет на складе')
+            # self.add_error(self.fields['quantity'], '000000нет на складе')
             # print('Ошибка 1 формы')
             raise ValidationError(f"Товара {self.cleaned_data['product']} нет на складе")
 
         if self.cleaned_data['quantity'] > self.cleaned_data['product'].quantity:
             # print('quantity->', self.cleaned_data['quantity'])
-            self.add_error('quantity', 'OOOOOOOOOOOshibka')
+            # self.add_error('quantity', 'OOOOOOOOOOOshibka')
             # print('Ошибка 2 формы')
             # print('product + quantity->', self.cleaned_data['product'].quantity)
             raise ValidationError(f"Товара {self.cleaned_data['product']} на складе {self.cleaned_data['product'].quantity} шт.")

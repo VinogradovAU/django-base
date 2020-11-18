@@ -15,8 +15,14 @@
                {{ orderitems.management_form }}
 
                {% for form in orderitems.forms %}
-                    {{ form.errors }}
-                   {% if forloop.first %}
+                    {% if form.errors %}
+
+
+                        <strong>{{ form.non_field_errors }}</strong>
+
+                    {% endif %}
+
+                    {% if forloop.first %}
                        <thead>
                        <tr>
                            {% for field in form.visible_fields %}

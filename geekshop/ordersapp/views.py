@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.shortcuts import get_object_or_404, HttpResponseRedirect, HttpResponse
 from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
@@ -95,8 +95,6 @@ class OrderItemsUpdate(UpdateView):
 
     def get_context_data(self, **kwargs):
         data = super(OrderItemsUpdate, self).get_context_data(**kwargs)
-        data['error'] = 0
-        data['error_msg'] = []
 
         # ----------
         OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=1)
@@ -139,7 +137,7 @@ class OrderItemsUpdate(UpdateView):
             # return super(OrderItemsUpdate, self).form_valid(form)
             # return HttpResponseRedirect(reverse_lazy('ordersapp:order_update',
             #                                          kwargs={'pk': self.object.id}))
-            return HttpResponseRedirect(self.request.META.get('HTTP_REFERER'))
+            return render_to_response('ordersapp/order_form.html', {'orderitems': orderitems})
 
 
         with transaction.atomic():

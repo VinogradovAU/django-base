@@ -13,6 +13,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import DetailView, DeleteView
 from django.conf import settings
 from django.core.cache import cache
+from django.views.decorators.cache import cache_page
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -98,7 +99,7 @@ def product_list(request, pk=None, page=1):
 
         return render(request, 'mainapp/products_list.html', content)
 
-
+@cache_page(3600)
 def products(request, pk=None, pk2=None):
     # загружаем названия категорий для формирования меню
     links_menu = get_links_menu()

@@ -54,6 +54,7 @@ class Basket(models.Model):
         return _totalcost
 
     @staticmethod
+    @cached_property
     def get_items(user):
         result = Basket.objects.filter(user=user).select_related('product').order_by('product__category')
         return result

@@ -145,7 +145,7 @@ def products(request, pk=None, pk2=None):
 
 
 def contact(request):
-    contacts = Contacts.objects.all().select_related()[:3]
+    contacts = get_contacts()
 
     context = {
         "contacts": contacts,
@@ -180,6 +180,17 @@ def get_links_menu():
         return links_menu
     else:
         return ProductCategory.objects.filter(is_active=True)
+
+def get_contacts():
+    if settings.LOW_CACHE:
+        key = 'contacts'
+        contacts = cache.get(key)
+        if contacts is None:
+            contacts = Contacts.objects.all()
+            cache.set(key, contacts)
+        return contacts
+    else:
+        return Contacts.objects.all()
 
 
 def get_category(pk):

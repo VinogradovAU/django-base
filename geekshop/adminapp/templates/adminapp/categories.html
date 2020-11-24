@@ -19,7 +19,7 @@
         </div>
         <div class="category_actions">
 
-          {% if object.is_active %}
+
           <button>
             <a href={% url 'admin:products' object.pk %}>
               товары категории
@@ -30,7 +30,7 @@
               редактировать
             </a>
           </button>
-          {% endif %}
+
           <button>
             {% if object.is_active %}
             <a href={% url 'admin:category_delete' object.pk %}>

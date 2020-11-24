@@ -13,6 +13,11 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import DetailView, DeleteView
 from ordersapp.models import Order
 
+from django.dispatch import receiver
+from django.db.models.signals import pre_save
+from django.db import connection
+from django.db.models import F
+
 
 @user_passes_test(lambda u: u.is_superuser)
 def user_create(request):
@@ -153,22 +158,44 @@ class ProductCategoryCreateView(CreateView):
         return context
 
 
+# class ProductCategoryUpdateView(UpdateView):
+#     model = ProductCategory
+#     template_name = 'adminapp/category_update.html'
+#     success_url = reverse_lazy('admin:categories')
+#     fields = '__all__'
+#
+#     def form_valid(self, form):
+#         self.object = form.save()
+#
+#         return HttpResponseRedirect(reverse('admin:categories'))
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['title'] = 'категории/редактирование'
+#
+#         return context
+
+
+# класс переписан для реализации функционала добавления скидки на все товары в категории
 class ProductCategoryUpdateView(UpdateView):
-    model = ProductCategory
-    template_name = 'adminapp/category_update.html'
-    success_url = reverse_lazy('admin:categories')
-    fields = '__all__'
+   model = ProductCategory
+   template_name = 'adminapp/category_update.html'
+   success_url = reverse_lazy('admin:categories')
+   form_class = ProductCategoryEditForm
 
-    def form_valid(self, form):
-        self.object = form.save()
+   def get_context_data(self, **kwargs):
+       context = super().get_context_data(**kwargs)
+       context['title'] = 'категории/редактирование'
+       return context
 
-        return HttpResponseRedirect(reverse('admin:categories'))
+   def form_valid(self, form):
+       if 'discount' in form.cleaned_data:
+           discount = form.cleaned_data['discount']
+           if discount:
+               self.object.product_set.update(price = F('price') * (1 - discount / 100))
+               db_profile_by_type(self.__class__, 'UPDATE', connection.queries)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'категории/редактирование'
-
-        return context
+       return super().form_valid(form)
 
 
 class CategoryListView(ListView):
@@ -437,7 +464,25 @@ def order_status_change(request, pk):
 
 
 def sys_info(request):
+
     context = {
-        'name_file_map_models': 'geekshop_visualized.png'
+        'name_file_map_models': 'geekshop_visualized.png',
     }
     return render(request, 'adminapp/sys_info.html', context)
+
+
+def db_profile_by_type(prefix, type, queries):
+    update_queries = list(filter(lambda x: type in x['sql'], queries))
+    print(f'db_profile {type} for {prefix}:')
+    [print(query['sql']) for query in update_queries]
+
+
+@receiver(pre_save, sender=ProductCategory)
+def product_is_active_update_productcategory_save(sender, instance, **kwargs):
+    if instance.pk:
+        if instance.is_active:
+            instance.product_set.update(is_active=True)
+        else:
+            instance.product_set.update(is_active=False)
+
+        db_profile_by_type(sender, 'UPDATE', connection.queries)

@@ -99,7 +99,7 @@ def product_list(request, pk=None, page=1):
 
         return render(request, 'mainapp/products_list.html', content)
 
-@cache_page(3600)
+# @cache_page(3600)
 def products(request, pk=None, pk2=None):
     # загружаем названия категорий для формирования меню
     links_menu = get_links_menu()
@@ -160,18 +160,6 @@ def contact(request):
 def get_links_menu():
     # return ProductCategory.objects.filter(is_active=True).select_related()
 
-    if settings.LOW_CACHE:
-        key = 'links_menu'
-        links_menu = cache.get(key)
-        if links_menu is None:
-            links_menu = ProductCategory.objects.filter(is_active=True)
-            cache.set(key, links_menu)
-        return links_menu
-    else:
-        return ProductCategory.objects.filter(is_active=True)
-
-
-def get_links_menu():
     if settings.LOW_CACHE:
         key = 'links_menu'
         links_menu = cache.get(key)

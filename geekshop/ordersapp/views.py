@@ -19,6 +19,7 @@ from django.dispatch import receiver
 from django.db.models.signals import pre_save, pre_delete
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.db.models import F
 
 
 class OrderList(ListView):
@@ -178,7 +179,7 @@ def order_ajax_price(request, pk, select_num):
         # print('product_price ->', order_item_obj.product.price)
         # print('product_id ->', order_item_obj.product.id)
 
-        products = Product.objects.get(id=select_num - 1).select_related()
+        products = Product.objects.get(id=select_num - 1)
         # products = Product.objects.all()
         # product_price = products[select_num - 1].price
         product_price = products.price
@@ -212,14 +213,18 @@ class OrderDelete(DeleteView):
 def product_quantity_update_save(sender, update_fields, instance, **kwargs):
     if update_fields is 'quantity' or 'product':
         if instance.pk:
-            instance.product.quantity -= instance.quantity - sender.get_item(instance.pk).quantity
+            # instance.product.quantity -= instance.quantity - sender.get_item(instance.pk).quantity
+            instance.product.quantity = F('quantity') - (instance.quantity - sender.get_item(instance.pk).quantity)
+
         else:
-            instance.product.quantity -= instance.quantity
+            # instance.product.quantity -= instance.quantity
+            instance.product.quantity = F('quantity') - instance.quantity
         instance.product.save()
 
 
 @receiver(pre_delete, sender=OrderItem)
 @receiver(pre_delete, sender=Basket)
 def product_quantity_update_delete(sender, instance, **kwargs):
-    instance.product.quantity += instance.quantity
+    # instance.product.quantity += instance.quantity
+    instance.product.quantity = F('quantity') + instance.quantity
     instance.product.save()

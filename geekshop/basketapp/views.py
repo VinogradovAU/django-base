@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.template.loader import render_to_string
 from django.http import JsonResponse
+from django.db.models import F
 
 
 @login_required
@@ -37,7 +38,9 @@ def basket_add(request, pk):
     if not basket_item:
         basket_item = Basket.objects.create(user=request.user, product=product_item)  # добавляем новый товар в корзину
 
-    basket_item.quantity += 1  # добавляем колическтво к существующему товару
+    basket_item.quantity = F('quantity') + 1
+
+    # basket_item.quantity += 1  # добавляем колическтво к существующему товару
     basket_item.save()  # делаем коммит в базу
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))  # возврат пользователя туда где он был
@@ -101,8 +104,7 @@ def basket_edit(request, pk, quantity):
             'basket': basket_items,
         }
 
-        result = render_to_string('basketapp/includes/inc_boot_basket.html', \
-                                  content)
+        result = render_to_string('basketapp/includes/inc_boot_basket.html', content)
 
         return JsonResponse({'result': result})
 

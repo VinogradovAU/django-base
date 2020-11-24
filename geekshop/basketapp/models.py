@@ -22,9 +22,9 @@ class Basket(models.Model):
     add_datetime = models.DateTimeField(verbose_name='время', auto_now_add=True)
     is_active = models.BooleanField(verbose_name='активный', default=True)
 
-    @cached_property
-    def get_items_cached(self):
-        return self.user.basket.select_related()
+    # @cached_property
+    # def get_items_cached(self):
+    #     return self.user.basket.select_related()
 
     @staticmethod
     def get_item(pk):
@@ -39,22 +39,21 @@ class Basket(models.Model):
     def total_quantity(self):
         "возвращает общее количнество всех товаров в корзине"
         # _items = Basket.objects.filter(user=self.user).exclude(is_active=False).select_related()
-        # _items = Basket.objects.filter(user=self.user, is_active=True).select_related()
-        _items = self.get_items_cached
+        _items = Basket.objects.filter(user=self.user, is_active=True).select_related()
+        # _items = self.get_items_cached
         _totalquantity = sum(list(map(lambda x: x.quantity, _items)))
         return _totalquantity
 
     @property
     def total_cost(self):
         "возвращает ИОТОГО всей корзины - всех покупок"
-        # _items = Basket.objects.filter(user=self.user).exclude(is_active=False).select_related()
-        # _items = Basket.objects.filter(user=self.user).exclude(is_active=False).select_related()
-        _items = self.get_items_cached
+        _items = Basket.objects.filter(user=self.user).exclude(is_active=False).select_related()
+        # _items = self.get_items_cached
         _totalcost = sum(list(map(lambda x: x.product_cost, _items)))
         return _totalcost
 
     @staticmethod
-    @cached_property
+    # @cached_property
     def get_items(user):
         result = Basket.objects.filter(user=user).select_related('product').order_by('product__category')
         return result

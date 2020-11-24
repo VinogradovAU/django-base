@@ -17,7 +17,7 @@ def send_verification_email(user):
 
     subject = f'Активация пользователя {user.username}'
 
-    message = f'Для подтверждения пелейдите по ссылке:\n {settings.DOMAIN_NAME}{verify_link}'
+    message = f'Для подтверждения перейдите по ссылке:\n {settings.DOMAIN_NAME}{verify_link}'
 
     print('send_verification_email->отправляем письмо')
     return send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)

@@ -211,12 +211,25 @@ class OrderDelete(DeleteView):
 @receiver(pre_save, sender=OrderItem)
 @receiver(pre_save, sender=Basket)
 def product_quantity_update_save(sender, update_fields, instance, **kwargs):
+    # print('sender type---->', type(sender))
+    # print('update_fields---->', update_fields)
     if update_fields is 'quantity' or 'product':
         if instance.pk:
+            # print('type instance----->',type(instance))
+            # print('instance.pk----->', instance.pk)
+            # print('instance.quantity----->',instance.quantity)
+            # print('instance----->', instance)
+            # print('instance.product.quantity----->',instance.product.quantity)
+            # print('sender.get_item(instance.pk).quantity---->', sender.get_item(instance.pk).quantity)
+
             # instance.product.quantity -= instance.quantity - sender.get_item(instance.pk).quantity
             instance.product.quantity = F('quantity') - (instance.quantity - sender.get_item(instance.pk).quantity)
 
         else:
+            # print('type instance----->', type(instance))
+            # print('instance.quantity----->', instance.quantity)
+            # print('instance.product.quantity----->', instance.product.quantity)
+
             # instance.product.quantity -= instance.quantity
             instance.product.quantity = F('quantity') - instance.quantity
         instance.product.save()

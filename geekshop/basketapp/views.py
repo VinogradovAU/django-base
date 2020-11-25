@@ -6,7 +6,6 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.template.loader import render_to_string
 from django.http import JsonResponse
-from django.db.models import F
 
 
 @login_required
@@ -30,17 +29,17 @@ def basket(request):
 def basket_add(request, pk):
     # получаем объект продукта для добавления в корзину
     product_item = get_object_or_404(Product.objects, id=pk)
-
+    # print('объект продукта----->', product_item)
     # проверяем, может такой товар уже добвлен в корзину
     basket_item = Basket.objects.filter(user=request.user, product=product_item).first()
-
+    # print('объект в корзине----->', basket_item)
     # если None то нет (небыло) такого товара в корзине
     if not basket_item:
+        # print('такого продукта нет в корзине, создаем новый')
         basket_item = Basket.objects.create(user=request.user, product=product_item)  # добавляем новый товар в корзину
 
-    basket_item.quantity = F('quantity') + 1
 
-    # basket_item.quantity += 1  # добавляем колическтво к существующему товару
+    basket_item.quantity += 1  # добавляем колическтво к существующему товару
     basket_item.save()  # делаем коммит в базу
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))  # возврат пользователя туда где он был
@@ -87,7 +86,7 @@ def basket_view(request):
 
 @login_required
 def basket_edit(request, pk, quantity):
-    print('я в basket_edit')
+    # print('я в basket_edit')
     if request.is_ajax():
         quantity = int(quantity)
         new_basket_item = Basket.objects.get(pk=int(pk))

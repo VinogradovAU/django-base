@@ -1,0 +1,24 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<script type="text/javascript">
+
+var bigsize = "700"; //Размер большой картинки
+var smallsize = "300"; //Размер маленькой картинки
+
+function changeSizeImage(im) {
+    if(im.height == bigsize) im.height = smallsize;
+    else im.height = bigsize;
+}
+
+</script>
+  <div class="users_list">
+      <div class="admin-image-db">
+        <img src="/media/sys_info/geekshop_visualized.png"
+             alt="Карта модели БД"  height="300" onclick="changeSizeImage(this)">
+      </div>
+
+  </div>
+{% endblock %}

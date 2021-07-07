@@ -260,6 +260,7 @@ html, body {
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 120px;
+
 }
 .tab-content .block {
 	height: 270px;
